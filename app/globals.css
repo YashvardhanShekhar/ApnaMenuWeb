@@ -1,26 +1,177 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Color Tokens */
+  --color-background-primary: #F5D8B3 ;
+  --color-background-secondary: #f9fafb;
+  --color-text-primary: #111827;
+  --color-text-secondary: #6b7280;
+  --color-border-primary: #e5e7eb;
+  --color-accent-primary: #E07A5F;
+  --color-accent-secondary: #10b981;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+  
+  /* Typography */
+  --font-family-sans: 'Inter', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', sans-serif;
+  
+  /* Spacing */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 1rem;
+  --spacing-md: 1.5rem;
+  --spacing-lg: 2rem;
+  --spacing-xl: 3rem;
+  
+  /* Breakpoints */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@utility btn-primary {
+  background-color: var(--color-button-primary);
+  color: var(--color-text-on-accent);
+  padding: 0.875rem 2rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 1.125rem;
+  transition: all 0.3s ease-in-out;
+  border: none;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: var(--color-button-primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(200, 90, 62, 0.3);
+  }
+  
+  &:active {
+    transform: translateY(0);
   }
 }
 
+@utility card {
+  background-color: var(--color-background-primary);
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--color-border-primary);
+  padding: 1.5rem;
+}
+
+/* Base Styles */
+html {
+  font-family: var(--font-family-sans);
+  font-size: 16px;
+  line-height: 1.5;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-background-primary);
+  color: var(--color-text-primary);
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+p {
+  margin: 0 0 1rem 0;
+  color: var(--color-text-secondary);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* NAVBAR */
+
+/* Add this to your existing @utility section */
+@utility navbar-link {
+  position: relative;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.375rem;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+@utility navbar-link-active {
+  color: var(--color-accent-primary);
+  background-color: rgb(239 246 255);
+  border-bottom: 2px solid var(--color-accent-primary);
+}
+
+@utility hamburger-line {
+  display: block;
+  height: 2px;
+  width: 24px;
+  background-color: var(--color-text-primary);
+  transition: all 0.3s ease-out;
+  transform-origin: center;
+}
+
+/* Mobile menu animations */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobile-menu-enter {
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Add these utilities to your existing globals.css */
+
+@utility animate-spin-slow {
+  animation: spin 3s linear infinite;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@utility btn-outline {
+  background-color: transparent;
+  color: var(--color-button-primary);
+  padding: 0.875rem 2rem;
+  border: 2px solid var(--color-button-primary);
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 1.125rem;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  
+  &:hover {
+    background-color: var(--color-button-primary);
+    color: var(--color-text-on-accent);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(200, 90, 62, 0.2);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
 }
