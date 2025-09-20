@@ -41,7 +41,7 @@ export default function Navbar() {
             onClick={closeMenu}
           >
             <span className="text-3xl">🍽️</span>
-            <span>ApnaMenu</span>
+            <span className='text-xl'>ApnaMenu</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -67,10 +67,10 @@ export default function Navbar() {
           {/* Primary CTA Button */}
           <Link
               href="/demo"
-              className="btn-primary inline-flex items-center space-x-2 ml-4"
+              className="btn-primary inline-flex items-center space-x-2 ml-34"
             >
               <span>🎯</span>
-              <span>Open demo menu</span>
+              <span >Demo</span>
             </Link>
 
           {/* Mobile Hamburger Button */}
