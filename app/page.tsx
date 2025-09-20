@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import Hero from './components/Hero'
+// import Hero2 from './components/Hero2'
 
 export const metadata: Metadata = {
   title: 'ApnaMenu - Transform Your Restaurant with Digital QR Menus',
