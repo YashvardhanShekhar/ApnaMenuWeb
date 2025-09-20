@@ -1,18 +1,20 @@
-import type { Metadata } from 'next'
-import Hero from './components/Hero'
+import type { Metadata } from "next";
+import Hero from "./components/Hero";
 // import Hero2 from './components/Hero2'
 
 export const metadata: Metadata = {
-  title: 'ApnaMenu - Transform Your Restaurant with Digital QR Menus',
-  description: 'Create stunning QR code menus for your restaurant. Boost sales, delight customers, and go paperless with ApnaMenu digital menu solutions.',
-  keywords: 'digital menu, QR code menu, restaurant technology, contactless dining, menu management',
-}
+  title: "ApnaMenu - Transform Your Restaurant with Digital QR Menus",
+  description:
+    "Create stunning QR code menus for your restaurant. Boost sales, delight customers, and go paperless with ApnaMenu digital menu solutions.",
+  keywords:
+    "digital menu, QR code menu, restaurant technology, contactless dining, menu management",
+};
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-      
+
       {/* Additional sections can be added here later */}
       <section className="py-16 text-center">
         <div className="container mx-auto px-4">
@@ -25,5 +27,5 @@ export default function HomePage() {
         </div>
       </section>
     </>
-  )
+  );
 }

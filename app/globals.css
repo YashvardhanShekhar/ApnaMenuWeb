@@ -2,34 +2,35 @@
 
 @theme {
   /* Color Tokens */
-  --color-background-primary: #F5D8B3;
+  --color-background-primary: #f5d8b3;
   --color-background-secondary: #f9fafb;
   --color-text-primary: #111827;
   --color-text-secondary: #6b7280;
   --color-border-primary: #e5e7eb;
-  --color-accent-primary: #E07A5F;
+  --color-accent-primary: #e07a5f;
   --color-accent-secondary: #10b981;
   --color-error: #ef4444;
   --color-warning: #f59e0b;
-  
+
   /* Button Colors */
-  --color-button-primary: #E07A5F;
+  --color-button-primary: #e07a5f;
   --color-button-primary-hover: #d16749;
   --color-text-on-accent: #ffffff;
-  --color-button-hover:#5c4220;
-  
+  --color-button-hover: #5c4220;
+
   /* Typography - Enhanced with Multiple Font Families */
-  --font-family-sans: var(--font-open-sans), 'Inter', system-ui, -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', sans-serif;
+  --font-family-sans: var(--font-open-sans), "Inter", system-ui, -apple-system,
+    "BlinkMacSystemFont", "Segoe UI", "Roboto", sans-serif;
   --font-family-heading: var(--font-playfair), Georgia, serif;
   --font-family-modern: var(--font-montserrat), system-ui, sans-serif;
-  
+
   /* Spacing */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
   --spacing-md: 1.5rem;
   --spacing-lg: 2rem;
   --spacing-xl: 3rem;
-  
+
   /* Breakpoints */
   --breakpoint-sm: 640px;
   --breakpoint-md: 768px;
@@ -41,20 +42,20 @@
 @utility btn-primary {
   background-color: var(--color-button-primary);
   color: var(--color-text-on-accent);
-  padding: .875rem 1rem;
+  padding: 0.875rem 1rem;
   border-radius: 0.75rem;
   font-weight: 600;
   font-size: 1.125rem;
   transition: all 0.3s ease-in-out;
   border: none;
   cursor: pointer;
-  
+
   &:hover {
     background-color: var(--color-button-hover);
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(224, 122, 95, 0.3);
   }
-  
+
   &:active {
     transform: translateY(0);
   }
@@ -70,14 +71,14 @@
   font-size: 1.125rem;
   transition: all 0.3s ease-in-out;
   cursor: pointer;
-  
+
   &:hover {
     background-color: var(--color-button-primary);
     color: var(--color-text-on-accent);
     transform: translateY(-2px);
     box-shadow: 0 8px 25px rgba(224, 122, 95, 0.2);
   }
-  
+
   &:active {
     transform: translateY(0);
   }
@@ -141,7 +142,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: 600;
   color: var(--color-text-primary);
   margin: 0;
