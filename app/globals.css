@@ -16,7 +16,7 @@
   --color-button-primary: #e07a5f;
   --color-button-primary-hover: #d16749;
   --color-text-on-accent: #ffffff;
-  --color-button-hover: #5c4220;
+  --color-button-hover: #b27300;
 
   /* Typography - Enhanced with Multiple Font Families */
   --font-family-sans: var(--font-open-sans), "Inter", system-ui, -apple-system,
@@ -42,10 +42,10 @@
 @utility btn-primary {
   background-color: var(--color-button-primary);
   color: var(--color-text-on-accent);
-  padding: 0.875rem 1rem;
+  padding: 0.875rem 0.7rem;
   border-radius: 0.75rem;
   font-weight: 600;
-  font-size: 1.125rem;
+  font-size: 1rem;
   transition: all 0.3s ease-in-out;
   border: none;
   cursor: pointer;

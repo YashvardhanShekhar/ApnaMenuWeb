@@ -67,7 +67,7 @@ export default function Navbar() {
           {/* Primary CTA Button */}
           <Link
               href="/demo"
-              className="btn-primary inline-flex items-center space-x-2 ml-34"
+              className="btn-primary inline-flex items-center space-x-2 ml-20"
             >
               <span>🎯</span>
               <span >Demo</span>
@@ -76,7 +76,7 @@ export default function Navbar() {
           {/* Mobile Hamburger Button */}
           <button
             onClick={toggleMenu}
-            className="md:hidden relative w-6 h-6 flex flex-col justify-center items-center space-y-1 focus:outline-none focus:ring-2 focus:ring-accent-primary focus:ring-offset-2 rounded"
+            className="md:hidden  relative w-10 h-6 flex flex-col justify-center items-center space-y-1 focus:outline-none focus:ring-2 focus:ring-accent-primary focus:ring-offset-2 rounded"
             aria-label="Toggle navigation menu"
             aria-expanded={isMenuOpen}
           >
@@ -100,7 +100,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          className={`bg-white md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
             isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
           }`}
         >
@@ -138,10 +138,29 @@ export default function Navbar() {
       {/* Mobile Menu Backdrop */}
       {isMenuOpen && (
         <div
-          className="md:hidden fixed inset-0 bg-black bg-opacity-25 z-40"
+          className="md:hidden fixed inset-0 bg-white  bg-opacity-25 z-40"
           onClick={closeMenu}
           aria-hidden="true"
-        />
+        >
+          <button className="absolute  top-2 right-6 text-3xl text-red-500 cursor-pointer ">✖</button>
+          <p className='h-10'></p>
+          {navItems.map((item) => (
+            
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={closeMenu}
+                className={` flex flex-col justify-center items-center font-bold  py-4 mb-2 text-xl  rounded-md transition-all duration-200 ${
+                  isActive(item.href)
+                    ? 'text-orange-500 bg-orange-200 border-l-5  rounded-md border-accent-primary'
+                    : ' text-gray-600 hover:text-text-primary  hover:bg-gray-100'
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+        </div>
+        
       )}
     </nav>
   )
