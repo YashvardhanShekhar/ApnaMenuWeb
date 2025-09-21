@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "./components/Navba
+import Navbar from "./components/Navbar";
 import { Open_Sans, Playfair_Display, Montserrat } from 'next/font/google'
 import Footer from "./components/Footer";
 
