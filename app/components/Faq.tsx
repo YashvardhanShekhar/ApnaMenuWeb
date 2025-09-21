@@ -44,7 +44,7 @@ export default function FAQPreview() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center flex flex-col gap-7 mb-6 sm:mb-12">
-          <h2 className="font-heading text-[2.5rem]  sm:text-3xl lg:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="font-heading text-[2.5rem]  sm:text-5xl lg:text-5xl font-bold text-gray-900 mb-4">
             Common Questions
           </h2>
           <div className='px-10'>
@@ -64,22 +64,22 @@ export default function FAQPreview() {
             >
               <button
                 onClick={() => toggleItem(faq.id)}
-                className={`w-full px-4  sm:px-6 py-4 sm:py-5 text-left flex items-center justify-between  hover:bg-orange-200 transition-colors bg-black duration-200 ${openItem === faq.id ? 'bg-orange-300' : 'bg-white/20' }`}
+                className={`w-full px-4  sm:px-6 py-4 sm:py-5 text-left flex items-center justify-between  hover:bg-orange-200 transition-colors bg-black duration-200 ${openItem === faq.id ? 'bg-gradient-to-r from-orange-300 to-orange-100' : 'bg-white/20' }`}
               >
                 <h3 className="font-modern text-base sm:text-lg font-semibold  text-gray-900 pr-3">
                   {faq.question}
                 </h3>
-                <div className={`flex-shrink-0 transform transition-transform duration-300 ${
+                <div className={`flex-shrink-0 transform cursor-pointer transition-transform duration-300 ${
                   openItem === faq.id ? 'rotate-180' : ''
                 }`}>
-                  <svg className="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-orange-600 " fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
               </button>
               
               <div className={`overflow-hidden transition-all duration-300 ${
-                openItem === faq.id ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'
+                openItem === faq.id ? 'max-h-48 mt-5 opacity-100' : 'max-h-0 opacity-0'
               }`}>
                 <div className="px-4 sm:px-6 pb-4 sm:pb-5">
                   <p className="font-sans text-sm sm:text-base text-gray-600 leading-relaxed">
