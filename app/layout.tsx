@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navba
 import { Open_Sans, Playfair_Display, Montserrat } from 'next/font/google'
 import Footer from "./components/Footer";
 
@@ -10,22 +10,22 @@ export const metadata: Metadata = {
 };
 
 const openSans = Open_Sans({
-  subsets: ['latin'],
-  variable: '--font-open-sans',
-  display: 'swap',
-})
+  subsets: ["latin"],
+  variable: "--font-open-sans",
+  display: "swap",
+});
 
 const playfairDisplay = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-playfair',
-  display: 'swap',
-})
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  display: "swap",
+});
 
 const montserrat = Montserrat({
-  subsets: ['latin'],
-  variable: '--font-montserrat',
-  display: 'swap',
-})
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  display: "swap",
+});
 
 export default function RootLayout({
   children,
@@ -33,10 +33,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${openSans.variable} ${playfairDisplay.variable} ${montserrat.variable}`}>
-      <body className={`min-h-screen  bg-background-primary text-text-primary ${openSans.className}>`}
+    <html
+      lang="en"
+      className={`${openSans.variable} ${playfairDisplay.variable} ${montserrat.variable}`}
+    >
+      <body
+        className={`min-h-screen  bg-background-primary text-text-primary ${openSans.className}>`}
       >
-        <Navbar/>
+        <Navbar />
         {children}
         <Footer/>
       </body>
