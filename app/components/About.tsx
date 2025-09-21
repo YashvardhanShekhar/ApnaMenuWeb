@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function AboutSection() {
   return (
-    <section className="relative bg-gradient-to-br from-orange-50 via-orange-100 to-orange-200 py-16 sm:py-20 md:py-15 lg:py-10 xl:py-18 overflow-hidden">
+    <section id="about" className="relative bg-gradient-to-br from-orange-50 via-orange-100 to-orange-200 py-16 sm:py-20 md:py-15 lg:py-10 xl:py-18 overflow-hidden">
       
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">

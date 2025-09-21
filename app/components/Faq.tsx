@@ -40,7 +40,7 @@ export default function FAQPreview() {
   }
 
   return (
-    <section className="py-10 sm:py-16 lg:py-20 bg-gradient-to-b from-orange-100 to-orange-50">
+    <section id="faq" className="py-10 sm:py-16 lg:py-20 bg-gradient-to-b from-orange-100 to-orange-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center flex flex-col gap-7 mb-6 sm:mb-12">

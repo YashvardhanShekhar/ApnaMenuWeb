@@ -1,7 +1,7 @@
 "use client";
 export default function Hero() {
   return (
-    <section className="relative bg-gradient-to-br bg-green-500 from-orange-50 via-white to-red-50 overflow-hidden min-h-screen flex items-center">
+    <section id="hero" className="relative bg-gradient-to-br bg-green-500 from-orange-50 via-white to-red-50 overflow-hidden min-h-screen flex items-center">
       <div className="container mx-auto px-4 sm:px-2 lg:px-50 py-8 sm:py-12 lg:py-1">
         {/* ✅ FIXED GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-20 items-center">
