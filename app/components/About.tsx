@@ -56,7 +56,7 @@ export default function AboutSection() {
                 
                 {/* Title */}
                 <div className='p-4'>
-                <h3 className="group-hover:scale-105 duration-400 ease-in-out transition-transform font-mono text-3xl sm:text-3xl md:text-4xl lg:text-2xl xl:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
+                <h3 className="group-hover:scale-105 duration-400 ease-in-out transition-transform font-mono text-2xl sm:text-3xl md:text-4xl lg:text-2xl xl:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
                   About ApnaMenu
                 </h3>
                 </div>
@@ -99,7 +99,7 @@ export default function AboutSection() {
                 
                 {/* Title */}
                 <div className='p-4'>
-                <h3 className=" group-hover:scale-105 duration-400 ease-in-out transition-transform  font-mono text-3xl sm:text-3xl md:text-4xl lg:text-2xl xl:text-3xl font-bold text-gray-900 mb-4 sm:mb-6 leading-tight">
+                <h3 className=" group-hover:scale-105 duration-400 ease-in-out transition-transform font-bold font-mono text-2xl sm:text-3xl md:text-4xl lg:text-2xl xl:text-3xl text-gray-900 mb-4 sm:mb-6 leading-tight">
                   Why ApnaMenu?
                 </h3>
                 </div>
@@ -131,7 +131,7 @@ export default function AboutSection() {
 
           {/* Section 3: Our Promise */}
           <div className="group lg:col-span-1">
-            <div className="bg-[#f5d6ad] rounded-3xl sm:rounded-4xl shadow-2xl p-8 sm:p-10 md:p-12 lg:p-10 xl:p-12 text-white hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 relative overflow-hidden">
+            <div className="bg-yellow-100 rounded-3xl sm:rounded-4xl shadow-2xl p-8 sm:p-10 md:p-12 lg:p-10 xl:p-12 text-white hover:shadow-3xl transition-all duration-500 transform hover:-translate-y-3 hover:scale-105 relative overflow-hidden">
               
               {/* Card Background Pattern */}
               <div className="absolute inset-0 opacity-20">
@@ -148,13 +148,13 @@ export default function AboutSection() {
               <div className="relative z-10">
                 {/* Icon */}
                 <div className='flex gap-2'>
-                <div className="flex items-center justify-center w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 lg:w-16 lg:h-16 xl:w-20 xl:h-20 bg-white/20 backdrop-blur-sm rounded-2xl mb-6 sm:mb-8 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:rotate-12 border border-white/30">
+                <div className="flex items-center justify-center w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 lg:w-16 lg:h-16 xl:w-20 xl:h-20 bg-green-300 backdrop-blur-sm rounded-2xl mb-6 sm:mb-8 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:rotate-12 border border-white/30">
                   <span className="text-2xl sm:text-3xl md:text-4xl lg:text-2xl xl:text-3xl">🚀</span>
                 </div>
                 
                 {/* Title */}
                 <div className='p-4'>
-                <h3 className="group-hover:scale-105 duration-400 ease-in-out transition-transform  font-mono text-3xl sm:text-3xl md:text-4xl lg:text-2xl xl:text-3xl font-bold mb-4 sm:mb-6 leading-tight">
+                <h3 className="group-hover:scale-105 duration-400 ease-in-out transition-transform  font-bold font-mono text-[1.6rem] sm:text-3xl md:text-4xl lg:text-2xl xl:text-3xl  mb-4 sm:mb-6 leading-tight">
                   Our Promise
                 </h3>
                 </div>
