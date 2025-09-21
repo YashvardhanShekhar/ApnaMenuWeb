@@ -101,9 +101,9 @@ export default function Hero() {
                 alt="ApnaMenu digital restaurant menu displayed on smartphone"
                 className="w-full h-auto rounded-xl sm:rounded-2xl object-cover aspect-[4/4.5] sm:aspect-[6/6]"
               />
-              <div className="absolute top-2 sm:top-4 lg:top-8 right-2 sm:right-4 lg:right-8 bg-orange-600 text-white px-2 sm:px-3 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-semibold shadow-lg">
+              {/* <div className="absolute top-2 sm:top-4 lg:top-8 right-2 sm:right-4 lg:right-8 bg-orange-600 text-white px-2 sm:px-3 py-1 sm:py-2 rounded-full text-xs sm:text-sm font-semibold shadow-lg">
                 <span className="hidden sm:inline">QR Ready! </span>📲
-              </div>
+              </div> */}
             </div>
             <div className="absolute -top-2 sm:-top-4 -right-2 sm:-right-4 text-2xl sm:text-3xl lg:text-4xl animate-bounce">
               🍽️
