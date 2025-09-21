@@ -3,6 +3,7 @@ import Hero from "./components/Hero";
 import AboutSection from "./components/About";
 import FAQ from "./components/Faqpage";
 import FAQPreview from "./components/Faq";
+import ContactPage from "./components/Contact";
 // import Hero2 from './components/Hero2'
 
 export const metadata: Metadata = {
@@ -19,6 +20,7 @@ export default function HomePage() {
       <Hero />
       <AboutSection/>
       <FAQPreview/>
+      <ContactPage/>
 
       {/* Additional sections can be added here later */}
       <section className="py-16 text-center">
