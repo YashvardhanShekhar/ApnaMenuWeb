@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Hero from "./components/Hero";
 import AboutSection from "./components/About";
+import FAQ from "./components/Faqpage";
+import FAQPreview from "./components/Faq";
 // import Hero2 from './components/Hero2'
 
 export const metadata: Metadata = {
@@ -16,6 +18,7 @@ export default function HomePage() {
     <>
       <Hero />
       <AboutSection/>
+      <FAQPreview/>
 
       {/* Additional sections can be added here later */}
       <section className="py-16 text-center">
