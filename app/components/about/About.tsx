@@ -1,41 +1,73 @@
 'use client'
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export default function AboutSection() {
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !hasAnimated) {
+          setHasAnimated(true);
+          // Disconnect observer after first animation
+          observer.unobserve(entry.target);
+        }
+      },
+      { 
+        threshold: 0.1,
+        rootMargin: '50px'
+      }
+    );
+
+    const currentRef = sectionRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.unobserve(currentRef);
+      }
+    };
+  }, [hasAnimated]);
+
   return (
-    <section id="about" className="relative bg-gradient-to-br from-orange-50 via-orange-100 to-orange-200 py-16 sm:py-20 md:py-15 lg:py-10 xl:py-18 overflow-hidden">
-      
+    <section 
+      ref={sectionRef}
+      id="about" 
+      className={`relative bg-gradient-to-br from-orange-50 via-orange-100 to-orange-200 py-16 sm:py-20 md:py-15 lg:py-10 xl:py-18 overflow-hidden transform transition-all duration-1000 ease-out ${
+        hasAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+      }`}
+    >
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 bg-orange-300/20 rounded-full blur-xl animate-float "></div>
-        <div className="absolute top-1/3 right-20 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 bg-red-300/20 rounded-full blur-xl animate-float-delay"></div>
-        <div className="absolute bottom-20 left-1/4 w-36 h-36 sm:w-44 sm:h-44 md:w-52 md:h-52 bg-yellow-300/20 rounded-full blur-xl animate-pulse"></div>
+        <div className={`absolute top-20 left-10 w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 bg-orange-300/20 rounded-full blur-xl animate-float transform transition-all duration-700 ${
+          hasAnimated ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+        }`}></div>
+        <div className={`absolute top-1/3 right-20 w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 bg-red-300/20 rounded-full blur-xl animate-float-delay transform transition-all duration-700 delay-300 ${
+          hasAnimated ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+        }`}></div>
+        <div className={`absolute bottom-20 left-1/4 w-36 h-36 sm:w-44 sm:h-44 md:w-52 md:h-52 bg-yellow-300/20 rounded-full blur-xl animate-pulse transform transition-all duration-700 delay-500 ${
+          hasAnimated ? 'opacity-100 scale-100' : 'opacity-0 scale-75'
+        }`}></div>
       </div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center mb-16 sm:mb-20 lg:mb-25">
-          {/* <div className="inline-flex items-center justify-center w-15 h-15 sm:w-24 sm:h-24 md:w-28 md:h-28 lg:w-32 lg:h-32 bg-gradient-to-br from-orange-500 to-red-500 rounded-full mb-8 sm:mb-10 lg:mb-12 shadow-2xl animate-bounce-subtle">
-            <span className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl">📱</span>
-          </div> */}
+        <div className={`text-center mb-16 sm:mb-20 lg:mb-25 transform transition-all duration-800 delay-200 ${
+          hasAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-5'
+        }`}>
           <h2 className="text-6xl font-heading sm:text-5xl md:text-6xl lg:text-6xl xl:text-6xl font-bold text-gray-900 mb-6 sm:mb-8">
             About{' '}
-            {/* <span className=" text-transparent bg-clip-text bg-gradient-to-r from-orange-600 to-red-600 relative">
-              ApnaMenu
-              <svg
-                      className="absolute -bottom-3 sm:-bottom-2 left-0 w-full h-3 sm:h-3 text-orange-500"
-                      viewBox="0 0 200 10"
-                      fill="currentColor"
-                    >
-                      <path d="M0,8 Q100,0 200,8 L200,10 L0,10 Z" />
-                    </svg>
-            </span> */}
           </h2>
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-10 md:gap-12 lg:gap-8 xl:gap-12">
+        <div className={`grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-10 md:gap-12 lg:gap-8 xl:gap-12 transform transition-all duration-1000 delay-400 ${
+          hasAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+        }`}>
           
           {/* Section 1: About ApnaMenu */}
           <div className="group">
@@ -95,7 +127,6 @@ export default function AboutSection() {
                 <div className="flex items-center justify-center w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 lg:w-16 lg:h-16 xl:w-20 xl:h-20 bg-gradient-to-br from-green-500 to-blue-500 rounded-2xl mb-6 sm:mb-8 shadow-lg group-hover:shadow-xl transition-all duration-300 group-hover:rotate-12">
                   <span className="text-2xl sm:text-3xl md:text-4xl lg:text-2xl xl:text-3xl">💡</span>
                 </div>
-                
                 
                 {/* Title */}
                 <div className='p-4'>
@@ -177,8 +208,6 @@ export default function AboutSection() {
             </div>
           </div>
         </div>
-
-        
       </div>
 
       <style jsx>{`
