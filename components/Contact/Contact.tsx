@@ -13,9 +13,21 @@ export default function ContactPage() {
 
   const [loading, setLoading] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [toastPosition, setToastPosition] = useState<
+    "top-center" | "bottom-center"
+  >("top-center");
+  const [inlineMessage, setInlineMessage] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
   const sectionRef = useRef(null);
 
   useEffect(() => {
+    // Mobile view me toast bottom pe
+    if (window.innerWidth <= 768) {
+      setToastPosition("bottom-center");
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting && !hasAnimated) {
@@ -43,6 +55,7 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setInlineMessage(null); // Clear old message
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -53,6 +66,10 @@ export default function ContactPage() {
       const data = await response.json();
       if (response.ok) {
         toast.success("Thanks for contacting us! We'll reach out soon.");
+        setInlineMessage({
+          type: "success",
+          text: "✅ Thanks for contacting us! We'll reach out soon!",
+        });
         setFormData({
           email: "",
           ownerName: "",
@@ -61,10 +78,18 @@ export default function ContactPage() {
           message: "",
         });
       } else {
-        toast.error(data.error || "Failed to submit form.");
+        toast.error(data.error || "❌ Failed to submit form.");
+        setInlineMessage({
+          type: "error",
+          text: "❌ Failed to submit form. Please try again.",
+        });
       }
     } catch (error) {
-      toast.error("Something went wrong. Try again later.");
+      toast.error("⚠️ Something went wrong. Try again later.");
+      setInlineMessage({
+        type: "error",
+        text: "⚠️ Something went wrong. Try again later.",
+      });
     } finally {
       setLoading(false);
     }
@@ -77,7 +102,8 @@ export default function ContactPage() {
         hasAnimated ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
       }`}
     >
-      <Toaster position="top-center" reverseOrder={false} />
+      {/* Toast with dynamic position */}
+      <Toaster position={toastPosition} reverseOrder={false} />
 
       {/* Background Decorative Elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -132,65 +158,6 @@ export default function ContactPage() {
                 </p>
               </div>
             </div>
-
-            {/* Features List */}
-            <div
-              className={`space-y-4 transform transition-all duration-800 delay-400 ${
-                hasAnimated
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-5"
-              }`}
-            >
-              {[
-                {
-                  icon: "🚀",
-                  text: "Boost your restaurant's efficiency with ApnaMenu",
-                },
-                { icon: "⏰", text: "Get a response within 24 hours" },
-                {
-                  icon: "💬",
-                  text: "Share your details, we'll get in touch soon",
-                },
-                { icon: "📱", text: "Digitize your menu hassle-free" },
-              ].map((item, index) => (
-                <div
-                  key={index}
-                  className={`flex items-start gap-4 p-4 bg-white/70 backdrop-blur-sm rounded-xl shadow-sm hover:shadow-md transition-all duration-300 transform ${
-                    hasAnimated ? "opacity-100 scale-100" : "opacity-0 scale-95"
-                  }`}
-                  style={{ transitionDelay: `${600 + index * 100}ms` }}
-                >
-                  <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-orange-200 to-red-200 rounded-lg flex items-center justify-center text-xl">
-                    {item.icon}
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-gray-700 font-medium">{item.text}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Contact Info */}
-            <div
-              className={`flex flex-wrap justify-center lg:justify-start gap-6 pt-6 transform transition-all duration-800 delay-1000 ${
-                hasAnimated
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-5"
-              }`}
-            >
-              <div className="flex items-center gap-2 text-gray-600">
-                <div className="w-8 h-8 bg-orange-200 rounded-full flex items-center justify-center">
-                  <span className="text-sm">📧</span>
-                </div>
-                <span className="font-medium">hello@apnamenu.site</span>
-              </div>
-              <div className="flex items-center gap-2 text-gray-600">
-                <div className="w-8 h-8 bg-orange-200 rounded-full flex items-center justify-center">
-                  <span className="text-sm">⏱️</span>
-                </div>
-                <span className="font-medium">24/7 Support</span>
-              </div>
-            </div>
           </div>
 
           {/* RIGHT FORM */}
@@ -239,6 +206,19 @@ export default function ContactPage() {
                     Fill out the form and let's transform your restaurant
                   </p>
                 </div>
+
+                {/* Inline Success/Error Message */}
+                {inlineMessage && (
+                  <div
+                    className={`p-3 mb-4 rounded-lg text-sm font-medium ${
+                      inlineMessage.type === "success"
+                        ? "bg-green-100 text-green-700 border border-green-300"
+                        : "bg-red-100 text-red-700 border border-red-300"
+                    }`}
+                  >
+                    {inlineMessage.text}
+                  </div>
+                )}
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
