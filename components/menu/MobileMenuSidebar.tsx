@@ -30,14 +30,14 @@ export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: M
       }`}>
         
         {/* Sidebar Header */}
-        <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-orange-50 to-amber-50">
-          <div>
-            <h2 className="text-lg font-bold text-gray-900">Menu Categories</h2>
+        <div className=" flex items-center justify-between p-4 border-b bg-gradient-to-b from-orange-200 to-amber-50">
+          <div className='flex flex-col gap-1'>
+            <h2 className="text-xl font-bold text-gray-900">Menu Categories</h2>
             <p className="text-sm text-gray-600">Choose your favorite</p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-full hover:bg-gray-200 transition-colors active:scale-95"
+            className="p-2 rounded-full hover:bg-orange-300 cursor-pointer transition-colors active:scale-95"
             aria-label="Close menu"
           >
             <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -60,8 +60,8 @@ export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: M
                   onClick={onClose}
                   className={`flex items-center gap-4 px-4 py-4 rounded-xl transition-all duration-200 ${
                     isActive 
-                      ? 'bg-gradient-to-r from-orange-100 to-amber-100 text-orange-700 border border-orange-200 shadow-sm transform scale-105' 
-                      : 'text-gray-700 hover:bg-gray-50 hover:scale-102'
+                      ? 'bg-gradient-to-r from-orange-100 to-amber-100 text-orange-700 border border-orange-200 shadow-sm transform scale-103 text-2xl' 
+                      : 'text-gray-700 hover:bg-amber-200 hover:scale-105'
                   }`}
                 >
                   <span className="text-2xl">{category.icon}</span>
