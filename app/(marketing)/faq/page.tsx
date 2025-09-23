@@ -1,5 +1,5 @@
 import type { Metadata } from 'next'
-import ContactPage from '../components/Contact'
+import FAQ from '../../../components/Faq/Faqpage'
 
 export const metadata: Metadata = {
   title: 'FAQ - Frequently Asked Questions | ApnaMenu',
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default function FAQPage() {
   return (
     <>
-      <ContactPage />
+      <FAQ />
     </>
   )
 }

@@ -92,14 +92,14 @@ export default function FAQPreview() {
         </div>
 
         {/* FAQ Items */}
-        <div className={`max-w-3xl mx-auto space-y-3 sm:space-y-4 mb-8 transform transition-all duration-1000 delay-400 ${
+        <div className={` max-w-3xl mx-auto space-y-3 sm:space-y-4 mb-8 transform transition-all duration-1000 delay-400 ${
           hasAnimated ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}>
           {previewFAQs.map((faq, index) => (
             <div
               key={faq.id}
-              className={`bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-orange-100 transform ${
-                hasAnimated ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-6 scale-95'
+              className={`rounded-xl shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden border border-orange-100 transform ${
+                hasAnimated ? ' opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-6 scale-95'
               }`}
               style={{ 
                 transitionDelay: hasAnimated ? `${600 + index * 100}ms` : '0ms',
@@ -108,8 +108,8 @@ export default function FAQPreview() {
             >
               <button
                 onClick={() => toggleItem(faq.id)}
-                className={`w-full px-4 sm:px-6 py-4 sm:py-5 text-left flex items-center justify-between hover:bg-orange-200 transition-colors duration-200 ${
-                  openItem === faq.id ? 'bg-gradient-to-r from-orange-300 to-orange-100' : 'bg-white/20'
+                className={`w-full  px-4 sm:px-6 py-4 sm:py-5 text-left flex items-center justify-between hover:bg-orange-200 transition-colors duration-200 ${
+                  openItem === faq.id ? ' bg-gradient-to-r from-orange-300 to-orange-100' : 'bg-white/20'
                 }`}
               >
                 <h3 className="font-modern text-base sm:text-lg font-semibold text-gray-900 pr-3">

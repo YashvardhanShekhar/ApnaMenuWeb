@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-import Hero from "./components/Hero";
-import AboutSection from "./components/about/About";
-import FAQPreview from "./components/Faq";
+import Hero from "../../components/Hero/Hero";
+import AboutSection from "../../components/about/About";
+import FAQPreview from "../../components/Faq/Faq";
 
 export const metadata: Metadata = {
   title: "ApnaMenu - Transform Your Restaurant with Digital QR Menus",
