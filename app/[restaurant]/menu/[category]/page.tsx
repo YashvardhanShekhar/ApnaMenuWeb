@@ -64,12 +64,12 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         <h2 className="text-3xl font-bold text-gray-900 capitalize mb-3">
           {category === 'all' ? 'All Items' : category}
         </h2>
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between relative top-2">
           <p className="text-gray-600">
             {filteredItems.length} item{filteredItems.length !== 1 ? 's' : ''} available
           </p>
           {filteredItems.length > 0 && (
-            <div className="flex items-center gap-2 text-sm text-gray-500">
+            <div className="flex items-center gap-2 text-sm text-gray-500 ">
               <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               Fresh & Ready
             </div>

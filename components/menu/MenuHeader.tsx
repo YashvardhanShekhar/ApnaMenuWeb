@@ -6,13 +6,13 @@ interface MenuHeaderProps {
 export default function MenuHeader({ restaurantName, onMenuClick }: MenuHeaderProps) {
   return (
     <header className="fixed top-0 left-0 right-0 z-30 bg-white shadow-sm border-b">
-      <div className="flex items-center justify-between px-4 py-3">
+      <div className="flex items-center justify-between px-4 py-3 ">
         {/* Restaurant Name */}
         <div className="flex-1">
-          <h1 className="text-xl font-bold text-gray-900 capitalize truncate">
+          <h1 className="text-3xl font-bold text-gray-900 capitalize truncate">
             {restaurantName.replace(/-/g, ' ')}
           </h1>
-          <p className="text-xs text-gray-500">Digital Menu</p>
+          <p className=" text-xs relative top-4 text-gray-500">Digital Menu</p>
         </div>
         
         {/* Menu Button (Right side) */}
