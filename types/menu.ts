@@ -1,27 +1,41 @@
+// export interface FoodItem {
+//   id: string
+//   name: string
+//   description: string
+//   price: number
+//   image?: string
+//   category: string
+//   available: boolean
+//   isVeg: boolean
+//   spiceLevel?: number
+// }
+
+// export interface Restaurant {
+//   id: string
+//   name: string
+//   logo?: string
+//   theme?: {
+//     primary: string
+//     secondary: string
+//   }
+// }
+
+// export interface Category {
+//   id: string
+//   name: string
+//   icon: string
+// }
+
 export interface FoodItem {
-  id: string
-  name: string
-  description: string
-  price: number
-  image?: string
-  category: string
-  available: boolean
-  isVeg: boolean
-  spiceLevel?: number
+  name: string,
+  price: number,
+  status: boolean,
 }
 
-export interface Restaurant {
-  id: string
-  name: string
-  logo?: string
-  theme?: {
-    primary: string
-    secondary: string
-  }
+export interface Category{
+  [itemName: string] : FoodItem
 }
 
-export interface Category {
-  id: string
-  name: string
-  icon: string
+interface Menu {
+  [categoryName: string]: MenuCategory;
 }
