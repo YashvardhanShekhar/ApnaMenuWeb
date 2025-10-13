@@ -14,7 +14,6 @@ export default function MenuLayout({ children, params }: MenuLayoutProps) {
   const { restaurant } = React.use(params)
   const [sidebarOpen, setSidebarOpen] = useState(false)
   
-  // Fetch categories at layout level
   const { categories, loading, restaurantName } = useMenuData(restaurant)
 
   return (
@@ -22,6 +21,7 @@ export default function MenuLayout({ children, params }: MenuLayoutProps) {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
         <MenuHeader 
           restaurantName={restaurantName || restaurant.replace(/-/g, ' ')}
+          restaurantId={restaurant}
           onMenuClick={() => setSidebarOpen(true)}
         />
         
@@ -37,7 +37,7 @@ export default function MenuLayout({ children, params }: MenuLayoutProps) {
         
         {sidebarOpen && (
           <div 
-            className="fixed inset-0 bg-white/2 bg-opacity-50 z-40 backdrop-blur-[3px]"
+            className="fixed inset-0 bg-black bg-opacity-50 z-40 backdrop-blur-sm"
             onClick={() => setSidebarOpen(false)}
           />
         )}

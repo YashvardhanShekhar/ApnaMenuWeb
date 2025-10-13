@@ -13,22 +13,19 @@ export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: M
   const pathname = usePathname()
   const { categories, loading } = useMenuContext()
   
-  // Create "All" category + database categories
   const allCategories = ['all', ...categories]
   
   return (
     <>
-      <div className={`fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out ${
+      <div className={`fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`}>
         
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-orange-50 to-amber-50">
-          <div >
-            <h2 className="text-2xl font-bold text-gray-900">Menu Categories</h2>
-            <div className='relative top-3'>
-            <p className=" text-sm text-gray-600">Choose your favorite</p>
-            </div>
+        {/* Header - Fixed */}
+        <div className="flex-shrink-0 flex items-center justify-between p-4 border-b bg-gradient-to-r from-orange-50 to-amber-50">
+          <div>
+            <h2 className="text-lg font-bold text-gray-900">Menu Categories</h2>
+            <p className="text-sm text-gray-600">Choose your favorite</p>
           </div>
           <button
             onClick={onClose}
@@ -41,10 +38,9 @@ export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: M
           </button>
         </div>
         
-        {/* Categories List */}
-        <nav className="flex-1 overflow-y-auto">
+        {/* Categories List - Scrollable */}
+        <nav className="flex-1 overflow-y-auto overflow-x-hidden relative">
           {loading ? (
-            // Loading skeleton
             <div className="p-3 space-y-2">
               {[1, 2, 3, 4].map(i => (
                 <div key={i} className="px-4 py-4 rounded-xl bg-gray-100 animate-pulse">
@@ -53,12 +49,11 @@ export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: M
               ))}
             </div>
           ) : (
-            <div className="p-3  space-y-2">
+            <div className="p-3 space-y-2">
               {allCategories.map((categoryName) => {
                 const href = `/${restaurantName}/menu/${categoryName.toLowerCase()}`
                 const isActive = pathname === href
                 
-                // Format category name for display
                 const displayName = categoryName === 'all' 
                   ? 'All Items' 
                   : categoryName.charAt(0).toUpperCase() + categoryName.slice(1)
@@ -90,8 +85,8 @@ export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: M
           )}
         </nav>
         
-        {/* Footer */}
-        <div className="p-4 border-t bg-gray-50">
+        {/* Footer - Fixed */}
+        <div className="flex-shrink-0 p-4 border-t bg-gray-50">
           <div className="text-center">
             <p className="text-xs text-gray-500">
               Powered by <span className="font-semibold text-orange-600">ApnaMenu</span>
