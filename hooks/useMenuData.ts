@@ -1,117 +1,122 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { FoodItem } from '@/types/menu'
+import { doc, onSnapshot } from 'firebase/firestore'
+import { db } from '@/lib/firebase'
+import { FoodItem, Menu } from '@/types/menu'
 
 export const useMenuData = (restaurantId: string) => {
   const [items, setItems] = useState<FoodItem[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [restaurantName, setRestaurantName] = useState<string>('')
 
   useEffect(() => {
-    // Simulate API call with dummy data
-    const fetchMenuData = async () => {
-      try {
-        // Simulate loading delay
-        await new Promise(resolve => setTimeout(resolve, 1000))
-        
-        // Dummy data - replace with Firebase later
-        const dummyItems: FoodItem[] = [
-          {   
-            id: '1',
-            name: 'Butter Chicken',
-            description: 'Creamy tomato curry with tender chicken pieces, served with basmati rice',
-            price: 350,
-            category: 'lunch',
-            available: true,
-            isVeg: false,
-            spiceLevel: 2,
-            image: 'https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400&h=300&fit=crop'
-          },
-          {
-            id: '2',
-            name: 'Mango Lassi',
-            description: 'Fresh mango yogurt drink, sweet and refreshing',
-            price: 120,
-            category: 'beverages',
-            available: true,
-            isVeg: true,
-            image: 'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop'
-          },
-          {
-            id: '3',
-            name: 'Paneer Tikka',
-            description: 'Grilled cottage cheese marinated in spices and herbs',
-            price: 280,
-            category: 'lunch',
-            available: true,
-            isVeg: true,
-            spiceLevel: 1,
-            image: 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=400&h=300&fit=crop'
-          },
-          {
-            id: '4',
-            name: 'Masala Chai',
-            description: 'Traditional Indian spiced tea with milk',
-            price: 60,
-            category: 'beverages',
-            available: true,
-            isVeg: true,
-            image: 'https://images.unsplash.com/photo-1597318181409-c265f2501331?w=400&h=300&fit=crop'
-          },
-          {
-            id: '5',
-            name: 'Aloo Paratha',
-            description: 'Stuffed potato bread served with butter and curd',
-            price: 150,
-            category: 'breakfast',
-            available: true,
-            isVeg: true,
-            image: 'https://images.unsplash.com/photo-1606471191009-63a0b5ba70e9?w=400&h=300&fit=crop'
-          },
-          {
-            id: '6',
-            name: 'Chicken Biryani',
-            description: 'Fragrant basmati rice with spiced chicken and saffron',
-            price: 420,
-            category: 'dinner',
-            available: true,
-            isVeg: false,
-            spiceLevel: 3,
-            image: 'https://images.unsplash.com/photo-1563379091339-03246963d321?w=400&h=300&fit=crop'
-          },
-          {
-            id: '7',
-            name: 'Gulab Jamun',
-            description: 'Sweet dumplings soaked in sugar syrup',
-            price: 120,
-            category: 'desserts',
-            available: true,
-            isVeg: true,
-            image: 'https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop'
-          },
-          {
-            id: '8',
-            name: 'Samosa',
-            description: 'Crispy pastry filled with spiced potatoes and peas',
-            price: 80,
-            category: 'snacks',
-            available: true,
-            isVeg: true,
-            spiceLevel: 1,
-            image: 'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&h=300&fit=crop'
-          }
-        ]
-        
-        setItems(dummyItems)
-        setLoading(false)
-      } catch (err) {
-        setError('Failed to load menu items')
-        setLoading(false)
-      }
+    console.log('🔍 Fetching menu for restaurant:', restaurantId)
+
+    if (!restaurantId) {
+      setError('Restaurant ID is required')
+      setLoading(false)
+      return
     }
 
-    fetchMenuData()
+    const docRef = doc(db, 'restaurants', restaurantId)
+    
+    const unsubscribe = onSnapshot(
+      docRef,
+      (docSnap) => {
+        console.log('📡 Firebase snapshot received')
+        console.log('📄 Document exists?', docSnap.exists())
+        
+        try {
+          if (docSnap.exists()) {
+            const restaurantData = docSnap.data()
+            console.log('✅ Full restaurant data:', JSON.stringify(restaurantData, null, 2))
+            
+            // Extract restaurant name from info field if exists
+            if (restaurantData.info && restaurantData.info.name) {
+              setRestaurantName(restaurantData.info.name)
+              console.log('🏪 Restaurant name from info:', restaurantData.info.name)
+            } else {
+              // Fallback to document ID
+              setRestaurantName(restaurantId.replace(/-/g, ' '))
+              console.log('🏪 Using document ID as name')
+            }
+            
+            // Check if menu exists
+            if (!restaurantData.menu) {
+              console.error('❌ No menu field found in document!')
+              console.log('Available fields:', Object.keys(restaurantData))
+              setError('Menu data not found in restaurant document')
+              setLoading(false)
+              return
+            }
+            
+            const menu: Menu = restaurantData.menu
+            console.log('🍽️ Menu data:', JSON.stringify(menu, null, 2))
+            
+            const menuItems: FoodItem[] = []
+            
+            Object.entries(menu).forEach(([categoryName, categoryItems]) => {
+              console.log(`📂 Category: ${categoryName}`)
+              console.log(`Items:`, categoryItems)
+              
+              if (typeof categoryItems !== 'object' || categoryItems === null) {
+                console.warn(`⚠️ Category ${categoryName} is not an object:`, categoryItems)
+                return
+              }
+              
+              Object.entries(categoryItems).forEach(([itemKey, itemData]) => {
+                console.log(`   ➕ Processing: ${itemKey}`, itemData)
+                
+                if (!itemData || typeof itemData !== 'object') {
+                  console.warn(`⚠️ Invalid item data for ${itemKey}:`, itemData)
+                  return
+                }
+                
+                const foodItem: FoodItem = {
+                  id: `${categoryName}-${itemKey}`,
+                  name: itemData.name || itemKey,
+                  price: itemData.price || 0,
+                  status: itemData.status !== undefined ? itemData.status : true,
+                  category: categoryName.toLowerCase(),
+                  description: ''
+                }
+                
+                menuItems.push(foodItem)
+                console.log('      ✅ Added:', foodItem.name, `₹${foodItem.price}`, `status: ${foodItem.status}`)
+              })
+            })
+            
+            console.log('✅ Total items loaded:', menuItems.length)
+            
+            setItems(menuItems)
+            setError(null)
+            setLoading(false)
+          } else {
+            console.error('❌ Restaurant document does not exist!')
+            console.log('🔍 Looking for document: restaurants/' + restaurantId)
+            setError('Restaurant not found')
+            setItems([])
+            setLoading(false)
+          }
+        } catch (err) {
+          console.error('❌ Error processing menu:', err)
+          setError('Failed to load menu items')
+          setLoading(false)
+        }
+      },
+      (err) => {
+        console.error('❌ Firebase connection error:', err)
+        setError('Failed to connect to database: ' + err.message)
+        setLoading(false)
+      }
+    )
+
+    return () => {
+      console.log('🔌 Disconnecting Firebase listener')
+      unsubscribe()
+    }
   }, [restaurantId])
 
-  return { items, loading, error }
+  return { items, loading, error, restaurantName }
 }

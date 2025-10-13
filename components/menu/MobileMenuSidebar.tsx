@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Category } from '@/types/menu'
+import { MenuCategory } from '@/types/menu'
 
 interface MobileMenuSidebarProps {
   restaurantName: string
@@ -9,15 +9,13 @@ interface MobileMenuSidebarProps {
   onClose: () => void
 }
 
-const menuCategories: Category[] = [
+const menuCategories: MenuCategory[] = [
   { id: 'all', name: 'All Items', icon: '🍽️' },
   { id: 'beverages', name: 'Beverages', icon: '🥤' },
-  { id: 'breakfast', name: 'Breakfast', icon: '🥐' },
-  { id: 'lunch', name: 'Lunch', icon: '🍱' },
-  { id: 'dinner', name: 'Dinner', icon: '🍽️' },
-  { id: 'desserts', name: 'Desserts', icon: '🍰' },
-  { id: 'snacks', name: 'Snacks', icon: '🍿' }
+  { id: 'snacks', name: 'Snacks', icon: '🍿' },
+  { id: 'chicken', name: 'Chicken', icon: '🍗' },
 ]
+
 
 export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: MobileMenuSidebarProps) {
   const pathname = usePathname()

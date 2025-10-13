@@ -1,5 +1,5 @@
 'use client'
-import React from 'react'
+import React, { useMemo } from 'react'
 import FoodItemCard from '@/components/menu/FoodItemCard'
 import { useMenuData } from '@/hooks/useMenuData'
 
@@ -11,18 +11,19 @@ interface CategoryPageProps {
 }
 
 export default function CategoryPage({ params }: CategoryPageProps) {
-  // Unwrap the async params using React.use()
   const { restaurant, category } = React.use(params)
-  
-  // Fetch menu data
-  const { items, loading, error } = useMenuData(restaurant)
+  const { items, loading, error, restaurantName } = useMenuData(restaurant)
 
-  // Filter items based on category
-  const filteredItems = category === 'all' 
-    ? items 
-    : items.filter(item => item.category === category)
+  const filteredItems = useMemo(() => {
+    if (category === 'all') return items
+    return items.filter(item => item.category.toLowerCase() === category.toLowerCase())
+  }, [items, category])
 
-  // Show loading state
+  const availableCount = useMemo(() => 
+    filteredItems.filter(item => item.status).length,
+    [filteredItems]
+  )
+
   if (loading) {
     return (
       <div className="px-4 py-6">
@@ -33,13 +34,12 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         <div className="space-y-5">
           {[1, 2, 3].map(i => (
             <div key={i} className="bg-white rounded-2xl p-5 animate-pulse">
-              <div className="flex gap-4">
-                <div className="w-24 h-24 bg-gray-200 rounded-xl"></div>
-                <div className="flex-1 space-y-3">
-                  <div className="h-5 bg-gray-200 rounded w-3/4"></div>
-                  <div className="h-4 bg-gray-200 rounded w-full"></div>
-                </div>
+              <div className="flex justify-between mb-3">
+                <div className="h-5 bg-gray-200 rounded w-3/4"></div>
+                <div className="h-5 bg-gray-200 rounded w-16"></div>
               </div>
+              <div className="h-4 bg-gray-200 rounded w-full mb-2"></div>
+              <div className="h-4 bg-gray-200 rounded w-2/3"></div>
             </div>
           ))}
         </div>
@@ -47,37 +47,47 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     )
   }
 
-  // Show error state
   if (error) {
     return (
       <div className="px-4 py-16 text-center">
-        <div className="text-4xl mb-4">⚠️</div>
-        <p className="text-gray-600">{error}</p>
+        <div className="max-w-md mx-auto bg-white rounded-2xl p-8 shadow-lg">
+          <div className="text-6xl mb-4">⚠️</div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-3">
+            Unable to Load Menu
+          </h2>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <p className="text-sm text-gray-500">
+            Make sure the restaurant ID is correct: <code className="bg-gray-100 px-2 py-1 rounded">{restaurant}</code>
+          </p>
+        </div>
       </div>
     )
   }
 
   return (
     <div className="px-4 py-6">
-      {/* Category Header */}
       <div className="mb-8">
         <h2 className="text-3xl font-bold text-gray-900 capitalize mb-3">
           {category === 'all' ? 'All Items' : category}
         </h2>
-        <div className="flex items-center justify-between relative top-2">
+        <div className="flex items-center justify-between flex-wrap gap-2">
           <p className="text-gray-600">
-            {filteredItems.length} item{filteredItems.length !== 1 ? 's' : ''} available
+            {filteredItems.length} item{filteredItems.length !== 1 ? 's' : ''} 
+            {availableCount < filteredItems.length && (
+              <span className="text-orange-600 font-medium">
+                {' '}• {availableCount} available
+              </span>
+            )}
           </p>
-          {filteredItems.length > 0 && (
-            <div className="flex items-center gap-2 text-sm text-gray-500 ">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              Fresh & Ready
+          {filteredItems.length > 0 && availableCount > 0 && (
+            <div className="flex items-center gap-2 text-sm text-green-600">
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+              Menu Updated Live
             </div>
           )}
         </div>
       </div>
       
-      {/* Items List */}
       <div className="space-y-5">
         {filteredItems.length > 0 ? (
           filteredItems.map((item) => (
