@@ -37,7 +37,7 @@ export default function MenuLayout({ children, params }: MenuLayoutProps) {
         
         {sidebarOpen && (
           <div 
-            className="fixed inset-0 bg-black bg-opacity-50 z-40 backdrop-blur-sm"
+            className="fixed inset-0 bg-white/1 bg-opacity-50 z-40 backdrop-blur-[3px]"
             onClick={() => setSidebarOpen(false)}
           />
         )}
