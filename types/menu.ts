@@ -1,42 +1,14 @@
-// export interface FoodItem {
-//   id: string
-//   name: string
-//   description: string
-//   price: number
-//   image?: string
-//   category: string
-//   available: boolean
-//   isVeg: boolean
-//   spiceLevel?: number
-// }
-
-// export interface Restaurant {
-//   id: string
-//   name: string
-//   logo?: string
-//   theme?: {
-//     primary: string
-//     secondary: string
-//   }
-// }
-
-// export interface Category {
-//   id: string
-//   name: string
-//   icon: string
-// }
-
-// Food Item Interface - matches your Firebase structure
+// Food Item Interface
 export interface FoodItem {
-  id: string           // We'll generate this
+  id: string
   name: string
   price: number
-  status: boolean      // Changed from 'available' to 'status'
   category: string
-  description?: string // Optional since not in your data
+  status: boolean
+  description?: string
 }
 
-// Category contains multiple food items
+// Category contains multiple food items (for Firebase data)
 export interface MenuCategory {
   [itemName: string]: {
     name: string
@@ -45,9 +17,16 @@ export interface MenuCategory {
   }
 }
 
-// Menu contains multiple categories
+// Menu contains multiple categories (for Firebase data)
 export interface Menu {
   [categoryName: string]: MenuCategory
+}
+
+// Category for UI navigation (sidebar)
+export interface Category {
+  id: string
+  name: string
+  icon: string
 }
 
 // Restaurant Interface
