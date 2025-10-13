@@ -16,7 +16,7 @@ export const useMenuData = (restaurantId: string) => {
         
         // Dummy data - replace with Firebase later
         const dummyItems: FoodItem[] = [
-          {
+          {   
             id: '1',
             name: 'Butter Chicken',
             description: 'Creamy tomato curry with tender chicken pieces, served with basmati rice',

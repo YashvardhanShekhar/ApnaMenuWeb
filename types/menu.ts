@@ -14,7 +14,7 @@ export interface Restaurant {
   id: string
   name: string
   logo?: string
-  theme?: {
+   theme?: {
     primary: string
     secondary: string
   }
