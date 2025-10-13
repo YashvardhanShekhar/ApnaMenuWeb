@@ -1,4 +1,5 @@
 'use client'
+import { useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useMenuContext } from '@/app/[restaurant]/menu/MenuContext'
@@ -14,12 +15,40 @@ export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: M
   const { categories, loading } = useMenuContext()
   
   const allCategories = ['all', ...categories]
+
+  // Prevent background scroll when sidebar is open
+  useEffect(() => {
+    if (isOpen) {
+      // Save current scroll position
+      const scrollY = window.scrollY
+      
+      // Prevent body scroll
+      document.body.style.position = 'fixed'
+      document.body.style.top = `-${scrollY}px`
+      document.body.style.width = '100%'
+      document.body.style.overflowY = 'scroll' // Keep scrollbar space
+      
+      return () => {
+        // Restore body scroll
+        document.body.style.position = ''
+        document.body.style.top = ''
+        document.body.style.width = ''
+        document.body.style.overflowY = ''
+        
+        // Restore scroll position
+        window.scrollTo(0, scrollY)
+      }
+    }
+  }, [isOpen])
   
   return (
     <>
-      <div className={`fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
-        isOpen ? 'translate-x-0' : 'translate-x-full'
-      }`}>
+      <div 
+        className={`fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
+          isOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+        onClick={(e) => e.stopPropagation()} // Prevent clicks inside sidebar from closing it
+      >
         
         {/* Header - Fixed */}
         <div className="flex-shrink-0 flex items-center justify-between p-4 border-b bg-gradient-to-r from-orange-50 to-amber-50">
@@ -38,8 +67,8 @@ export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: M
           </button>
         </div>
         
-        {/* Categories List - Scrollable */}
-        <nav className="flex-1 overflow-y-auto overflow-x-hidden relative">
+        {/* Categories List - Scrollable with overscroll prevention */}
+        <nav className="flex-1 overflow-y-auto overflow-x-hidden overscroll-contain">
           {loading ? (
             <div className="p-3 space-y-2">
               {[1, 2, 3, 4].map(i => (

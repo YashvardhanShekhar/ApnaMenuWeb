@@ -16,17 +16,18 @@ export default function MenuHeader({ restaurantName, restaurantId, onMenuClick }
   return (
     <>
       <header className="fixed top-0 left-0 right-0 z-30 bg-white shadow-sm border-b">
-        <div className="flex items-center justify-between px-4 py-3">
-          {/* Left: Restaurant Name */}
-          <div className="flex-1">
+        <div className="flex items-center gap-3 px-4 py-3">
+          
+          {/* Left: Restaurant Name - Takes available space but has max width */}
+          <div className="flex-1 min-w-0 max-w-[calc(100%-120px)]">
             <h1 className="text-lg font-bold text-gray-900 capitalize truncate">
               {restaurantName || 'Restaurant Menu'}
             </h1>
-            <p className="text-xs text-gray-500">Digital Menu</p>
+            <p className="text-xs text-gray-500 truncate">Digital Menu</p>
           </div>
           
-          {/* Right: Search + Menu Buttons */}
-          <div className="flex items-center gap-2">
+          {/* Right: Search + Menu Buttons - Fixed width */}
+          <div className="flex items-center gap-2 flex-shrink-0">
             {/* Search Button */}
             <button
               onClick={() => setSearchOpen(true)}
