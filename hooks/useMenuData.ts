@@ -6,6 +6,7 @@ import { FoodItem, Menu } from '@/types/menu'
 
 export const useMenuData = (restaurantId: string) => {
   const [items, setItems] = useState<FoodItem[]>([])
+  const [categories, setCategories] = useState<string[]>([]) // ← NEW: Categories array
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [restaurantName, setRestaurantName] = useState<string>('')
@@ -25,51 +26,39 @@ export const useMenuData = (restaurantId: string) => {
       docRef,
       (docSnap) => {
         console.log('📡 Firebase snapshot received')
-        console.log('📄 Document exists?', docSnap.exists())
         
         try {
           if (docSnap.exists()) {
             const restaurantData = docSnap.data()
-            console.log('✅ Full restaurant data:', JSON.stringify(restaurantData, null, 2))
             
-            // Extract restaurant name from info field if exists
+            // Extract restaurant name
             if (restaurantData.info && restaurantData.info.name) {
               setRestaurantName(restaurantData.info.name)
-              console.log('🏪 Restaurant name from info:', restaurantData.info.name)
             } else {
-              // Fallback to document ID
               setRestaurantName(restaurantId.replace(/-/g, ' '))
-              console.log('🏪 Using document ID as name')
             }
             
-            // Check if menu exists
             if (!restaurantData.menu) {
-              console.error('❌ No menu field found in document!')
-              console.log('Available fields:', Object.keys(restaurantData))
-              setError('Menu data not found in restaurant document')
+              console.error('❌ No menu field found!')
+              setError('Menu data not found')
               setLoading(false)
               return
             }
             
             const menu: Menu = restaurantData.menu
-            console.log('🍽️ Menu data:', JSON.stringify(menu, null, 2))
-            
             const menuItems: FoodItem[] = []
+            const categoryList: string[] = [] // ← NEW: Collect categories
             
             Object.entries(menu).forEach(([categoryName, categoryItems]) => {
-              console.log(`📂 Category: ${categoryName}`)
-              console.log(`Items:`, categoryItems)
+              // ✅ Add category to list
+              categoryList.push(categoryName)
               
               if (typeof categoryItems !== 'object' || categoryItems === null) {
-                console.warn(`⚠️ Category ${categoryName} is not an object:`, categoryItems)
                 return
               }
               
               Object.entries(categoryItems).forEach(([itemKey, itemData]) => {
-                console.log(`   ➕ Processing: ${itemKey}`, itemData)
-                
                 if (!itemData || typeof itemData !== 'object') {
-                  console.warn(`⚠️ Invalid item data for ${itemKey}:`, itemData)
                   return
                 }
                 
@@ -83,18 +72,18 @@ export const useMenuData = (restaurantId: string) => {
                 }
                 
                 menuItems.push(foodItem)
-                console.log('      ✅ Added:', foodItem.name, `₹${foodItem.price}`, `status: ${foodItem.status}`)
               })
             })
             
+            console.log('✅ Categories found:', categoryList)
             console.log('✅ Total items loaded:', menuItems.length)
             
+            setCategories(categoryList) // ← NEW: Set categories
             setItems(menuItems)
             setError(null)
             setLoading(false)
           } else {
             console.error('❌ Restaurant document does not exist!')
-            console.log('🔍 Looking for document: restaurants/' + restaurantId)
             setError('Restaurant not found')
             setItems([])
             setLoading(false)
@@ -118,5 +107,5 @@ export const useMenuData = (restaurantId: string) => {
     }
   }, [restaurantId])
 
-  return { items, loading, error, restaurantName }
+  return { items, categories, loading, error, restaurantName } // ← Return categories
 }

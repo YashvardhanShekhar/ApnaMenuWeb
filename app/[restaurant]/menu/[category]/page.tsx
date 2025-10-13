@@ -67,11 +67,12 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   return (
     <div className="px-4 py-6">
       <div className="mb-8">
-        <h2 className="text-3xl font-bold text-gray-900 capitalize mb-3">
+        <h2 className="text-4xl font-bold text-gray-900 capitalize mb-3">
           {category === 'all' ? 'All Items' : category}
         </h2>
         <div className="flex items-center justify-between flex-wrap gap-2">
-          <p className="text-gray-600">
+          <div className="mt-2">
+          <p className="text-gray-600 ">
             {filteredItems.length} item{filteredItems.length !== 1 ? 's' : ''} 
             {availableCount < filteredItems.length && (
               <span className="text-orange-600 font-medium">
@@ -79,6 +80,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
               </span>
             )}
           </p>
+          </div>
           {filteredItems.length > 0 && availableCount > 0 && (
             <div className="flex items-center gap-2 text-sm text-green-600">
               <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>

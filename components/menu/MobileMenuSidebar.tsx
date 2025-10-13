@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Category } from '@/types/menu'  
+import { useMenuContext } from '@/app/[restaurant]/menu/MenuContext'
 
 interface MobileMenuSidebarProps {
   restaurantName: string
@@ -9,19 +9,12 @@ interface MobileMenuSidebarProps {
   onClose: () => void
 }
 
-const menuCategories: Category[] = [
-  { id: 'all', name: 'All Items', icon: '🍽️' },
-  { id: 'beverages', name: 'Beverages', icon: '🥤' },
-  { id: 'breakfast', name: 'Breakfast', icon: '🥐' },
-  { id: 'lunch', name: 'Lunch', icon: '🍱' },
-  { id: 'dinner', name: 'Dinner', icon: '🍽️' },
-  { id: 'desserts', name: 'Desserts', icon: '🍰' },
-  { id: 'snacks', name: 'Snacks', icon: '🍿' },
-  { id: 'chicken', name: 'Chicken', icon: '🍗' },
-]
-
 export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: MobileMenuSidebarProps) {
   const pathname = usePathname()
+  const { categories, loading } = useMenuContext()
+  
+  // Create "All" category + database categories
+  const allCategories = ['all', ...categories]
   
   return (
     <>
@@ -29,10 +22,13 @@ export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: M
         isOpen ? 'translate-x-0' : 'translate-x-full'
       }`}>
         
+        {/* Header */}
         <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-orange-50 to-amber-50">
-          <div>
-            <h2 className="text-lg font-bold text-gray-900">Menu Categories</h2>
-            <p className="text-sm text-gray-600">Choose your favorite</p>
+          <div >
+            <h2 className="text-2xl font-bold text-gray-900">Menu Categories</h2>
+            <div className='relative top-3'>
+            <p className=" text-sm text-gray-600">Choose your favorite</p>
+            </div>
           </div>
           <button
             onClick={onClose}
@@ -45,39 +41,56 @@ export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: M
           </button>
         </div>
         
+        {/* Categories List */}
         <nav className="flex-1 overflow-y-auto">
-          <div className="p-3 space-y-2">
-            {menuCategories.map((category) => {
-              const href = `/${restaurantName}/menu/${category.id}`
-              const isActive = pathname === href
-              
-              return (
-                <Link
-                  key={category.id}
-                  href={href}
-                  onClick={onClose}
-                  className={`flex items-center gap-4 px-4 py-4 rounded-xl transition-all duration-200 ${
-                    isActive 
-                      ? 'bg-gradient-to-r from-orange-100 to-amber-100 text-orange-700 border border-orange-200 shadow-sm transform scale-105' 
-                      : 'text-gray-700 hover:bg-gray-50 hover:scale-102'
-                  }`}
-                >
-                  <span className="text-2xl">{category.icon}</span>
-                  <div className="flex-1">
-                    <span className="font-semibold">{category.name}</span>
+          {loading ? (
+            // Loading skeleton
+            <div className="p-3 space-y-2">
+              {[1, 2, 3, 4].map(i => (
+                <div key={i} className="px-4 py-4 rounded-xl bg-gray-100 animate-pulse">
+                  <div className="h-5 bg-gray-200 rounded w-3/4"></div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="p-3  space-y-2">
+              {allCategories.map((categoryName) => {
+                const href = `/${restaurantName}/menu/${categoryName.toLowerCase()}`
+                const isActive = pathname === href
+                
+                // Format category name for display
+                const displayName = categoryName === 'all' 
+                  ? 'All Items' 
+                  : categoryName.charAt(0).toUpperCase() + categoryName.slice(1)
+                
+                return (
+                  <Link
+                    key={categoryName}
+                    href={href}
+                    onClick={onClose}
+                    className={`flex items-center justify-between px-4 py-4 rounded-xl transition-all duration-200 ${
+                      isActive 
+                        ? 'bg-gradient-to-r from-orange-100 to-amber-100 text-orange-700 border border-orange-200 shadow-sm' 
+                        : 'text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
+                    <div className="flex-1">
+                      <span className="font-semibold">{displayName}</span>
+                      {isActive && (
+                        <div className="text-xs text-orange-600 mt-1">Currently viewing</div>
+                      )}
+                    </div>
                     {isActive && (
-                      <div className="text-xs text-orange-600 mt-1">Currently viewing</div>
+                      <div className="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
                     )}
-                  </div>
-                  {isActive && (
-                    <div className="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
-                  )}
-                </Link>
-              )
-            })}
-          </div>
+                  </Link>
+                )
+              })}
+            </div>
+          )}
         </nav>
         
+        {/* Footer */}
         <div className="p-4 border-t bg-gray-50">
           <div className="text-center">
             <p className="text-xs text-gray-500">
