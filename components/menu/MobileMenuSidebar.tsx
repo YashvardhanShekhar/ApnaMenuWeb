@@ -16,26 +16,19 @@ export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: M
   
   const allCategories = ['all', ...categories]
 
-  // Prevent background scroll when sidebar is open
   useEffect(() => {
     if (isOpen) {
-      // Save current scroll position
       const scrollY = window.scrollY
-      
-      // Prevent body scroll
       document.body.style.position = 'fixed'
       document.body.style.top = `-${scrollY}px`
       document.body.style.width = '100%'
-      document.body.style.overflowY = 'scroll' // Keep scrollbar space
+      document.body.style.overflow = 'hidden'
       
       return () => {
-        // Restore body scroll
         document.body.style.position = ''
         document.body.style.top = ''
         document.body.style.width = ''
-        document.body.style.overflowY = ''
-        
-        // Restore scroll position
+        document.body.style.overflow = ''
         window.scrollTo(0, scrollY)
       }
     }
@@ -44,21 +37,19 @@ export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: M
   return (
     <>
       <div 
-        className={`fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
+        className={`fixed top-0 right-0 h-full w-72 bg-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col border-l border-gray-200 ${
           isOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
-        onClick={(e) => e.stopPropagation()} // Prevent clicks inside sidebar from closing it
       >
         
-        {/* Header - Fixed */}
-        <div className="flex-shrink-0 flex items-center justify-between p-4 border-b bg-gradient-to-r from-orange-50 to-amber-50">
+        <div className="flex-shrink-0 flex items-center justify-between p-4 border-b border-gray-200">
           <div>
             <h2 className="text-lg font-bold text-gray-900">Menu Categories</h2>
-            <p className="text-sm text-gray-600">Choose your favorite</p>
+            <p className="text-sm text-gray-600">Browse menu</p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-full hover:bg-gray-200 transition-colors active:scale-95"
+            className="p-2 rounded-full hover:bg-gray-100 transition-colors active:scale-95"
             aria-label="Close menu"
           >
             <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,18 +58,17 @@ export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: M
           </button>
         </div>
         
-        {/* Categories List - Scrollable with overscroll prevention */}
         <nav className="flex-1 overflow-y-auto overflow-x-hidden overscroll-contain">
           {loading ? (
             <div className="p-3 space-y-2">
               {[1, 2, 3, 4].map(i => (
-                <div key={i} className="px-4 py-4 rounded-xl bg-gray-100 animate-pulse">
+                <div key={i} className="px-4 py-3 rounded-lg bg-gray-100 animate-pulse">
                   <div className="h-5 bg-gray-200 rounded w-3/4"></div>
                 </div>
               ))}
             </div>
           ) : (
-            <div className="p-3 space-y-2">
+            <div className="p-3 space-y-1">
               {allCategories.map((categoryName) => {
                 const href = `/${restaurantName}/menu/${categoryName.toLowerCase()}`
                 const isActive = pathname === href
@@ -92,20 +82,15 @@ export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: M
                     key={categoryName}
                     href={href}
                     onClick={onClose}
-                    className={`flex items-center justify-between px-4 py-4 rounded-xl transition-all duration-200 ${
+                    className={`flex items-center justify-between px-4 py-3 rounded-lg transition-all duration-200 ${
                       isActive 
-                        ? 'bg-gradient-to-r from-orange-100 to-amber-100 text-orange-700 border border-orange-200 shadow-sm' 
+                        ? 'bg-gradient-to-r from-orange-500 to-orange-400 text-white shadow-sm' 
                         : 'text-gray-700 hover:bg-gray-50'
                     }`}
                   >
-                    <div className="flex-1">
-                      <span className="font-semibold">{displayName}</span>
-                      {isActive && (
-                        <div className="text-xs text-orange-600 mt-1">Currently viewing</div>
-                      )}
-                    </div>
+                    <span className="font-semibold">{displayName}</span>
                     {isActive && (
-                      <div className="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></div>
+                      <div className="w-2 h-2 bg-white rounded-full"></div>
                     )}
                   </Link>
                 )
@@ -114,13 +99,11 @@ export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: M
           )}
         </nav>
         
-        {/* Footer - Fixed */}
-        <div className="flex-shrink-0 p-4 border-t bg-gray-50">
+        <div className="flex-shrink-0 p-4 border-t border-gray-200">
           <div className="text-center">
             <p className="text-xs text-gray-500">
-              Powered by <span className="font-semibold text-orange-600">ApnaMenu</span>
+              Powered by <span className="font-semibold text-orange-500">ApnaMenu</span>
             </p>
-            <p className="text-xs text-gray-400 mt-1">Digital Menu Solution</p>
           </div>
         </div>
       </div>

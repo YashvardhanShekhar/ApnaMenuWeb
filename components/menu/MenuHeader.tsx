@@ -13,22 +13,28 @@ export default function MenuHeader({ restaurantName, restaurantId, onMenuClick }
   const [searchOpen, setSearchOpen] = useState(false)
   const { items } = useMenuData(restaurantId)
 
+  const getNameFontSize = (name: string) => {
+    const length = name.length
+    if (length <= 15) return 'text-lg'
+    if (length <= 25) return 'text-base'
+    return 'text-sm'
+  }
+
+  const nameSize = getNameFontSize(restaurantName)
+
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-30 bg-white shadow-sm border-b">
+      <header className="fixed top-0 left-0 right-0 z-30 bg-white shadow-sm border-b border-gray-200">
         <div className="flex items-center gap-3 px-4 py-3">
           
-          {/* Left: Restaurant Name - Takes available space but has max width */}
-          <div className="flex-1 min-w-0 max-w-[calc(100%-120px)]">
-            <h1 className="text-lg font-bold text-gray-900 capitalize truncate">
+          <div className="flex-1 min-w-0">
+            <h1 className={`${nameSize} font-bold text-gray-900 capitalize truncate`}>
               {restaurantName || 'Restaurant Menu'}
             </h1>
-            <p className="text-xs text-gray-500 truncate">Digital Menu</p>
+            <p className="text-xs text-gray-600 truncate">Digital Menu</p>
           </div>
           
-          {/* Right: Search + Menu Buttons - Fixed width */}
           <div className="flex items-center gap-2 flex-shrink-0">
-            {/* Search Button */}
             <button
               onClick={() => setSearchOpen(true)}
               className="p-3 rounded-xl bg-gray-100 hover:bg-gray-200 transition-colors active:scale-95"
@@ -39,13 +45,12 @@ export default function MenuHeader({ restaurantName, restaurantId, onMenuClick }
               </svg>
             </button>
 
-            {/* Menu Toggle Button */}
             <button
               onClick={onMenuClick}
-              className="p-3 rounded-xl bg-orange-100 hover:bg-orange-200 transition-colors active:scale-95"
+              className="p-3 rounded-xl bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 transition-all active:scale-95 shadow-sm"
               aria-label="Open menu"
             >
-              <svg className="w-6 h-6 text-orange-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </button>
@@ -53,7 +58,6 @@ export default function MenuHeader({ restaurantName, restaurantId, onMenuClick }
         </div>
       </header>
 
-      {/* Search Modal */}
       <SearchModal 
         isOpen={searchOpen}
         onClose={() => setSearchOpen(false)}
