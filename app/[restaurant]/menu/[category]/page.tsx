@@ -3,6 +3,8 @@ import React, { useMemo } from 'react'
 import CategorySection from '@/components/menu/CategorySection'
 import { useMenuData } from '@/hooks/useMenuData'
 import { FoodItem } from '@/types/menu'
+import { notFound } from 'next/navigation'
+
 
 interface CategoryPageProps {
   params: Promise<{ 
@@ -14,6 +16,22 @@ interface CategoryPageProps {
 export default function CategoryPage({ params }: CategoryPageProps) {
   const { restaurant, category } = React.use(params)
   const { items, loading, error } = useMenuData(restaurant)
+
+  const availableCategories = useMemo(() => {
+    const uniqueCategories = new Set<string>()
+    items.forEach(item => uniqueCategories.add(item.category.toLowerCase()))
+    return Array.from(uniqueCategories)
+  }, [items])
+
+  // Check if category exists (only after data is loaded)
+  React.useEffect(() => {
+    if (!loading && !error && category !== 'all') {
+      const categoryExists = availableCategories.includes(category.toLowerCase())
+      if (!categoryExists && items.length > 0) {
+        notFound()
+      }
+    }
+  }, [loading, error, category, availableCategories, items.length])
 
   // Group items by category
   const groupedItems = useMemo(() => {
@@ -83,7 +101,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         
         {/* Page Title */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold  text-gray-900 mb-2">
             MENU
           </h1>
           <p className="text-gray-600 text-sm">

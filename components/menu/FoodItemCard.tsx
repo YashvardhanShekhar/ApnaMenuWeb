@@ -28,7 +28,7 @@ export default function FoodItemCard({ item, isLast }: FoodItemCardProps) {
         {/* Right: Price */}
         <div className="flex-shrink-0 mr-2">
           <span className="text-gray-900 font-semibold text-base">
-            ${item.price}
+            ₹{item.price}
           </span>
         </div>
       </div>
