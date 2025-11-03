@@ -118,7 +118,7 @@ export default function Navbar() {
                 key={item.href}
                 href={item.href}
                 onClick={(e) => handleNavClick(e, item)}
-                className={`px-3 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+                className={`px-8 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                   isActive(item)
                     ? 'text-orange-600 bg-orange-100 font-semibold'
                     : 'text-gray-900 hover:text-orange-600 hover:bg-orange-50'

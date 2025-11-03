@@ -141,7 +141,7 @@ export default function FAQ() {
   };
 
   return (
-    <section className="py-16 sm:py-20 lg:py-24 bg-gradient-to-b from-white to-orange-50">
+    <section className="py-16 sm:py-20 lg:py-24  bg-gradient-to-br from-orange-50 via-white to-red-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-12 lg:mb-16 flex flex-col items-center text-center">
@@ -181,7 +181,7 @@ export default function FAQ() {
             >
               <button
                 onClick={() => toggleItem(faq.id)}
-                className="w-full px-6 sm:px-8 py-6 text-left flex items-center justify-between hover:bg-orange-50 transition-colors duration-200"
+                className={`w-full px-6 sm:px-8 py-6 text-left flex items-center justify-between hover:bg-orange-50 transition-colors duration-200 ${openItems.includes(faq.id) ? "bg-gradient-to-r from-orange-300 to-orange-100": "bg-white/20"}`}
               >
                 <h3 className="font-modern text-lg sm:text-xl font-semibold text-gray-900 pr-4">
                   {faq.question}
@@ -210,7 +210,7 @@ export default function FAQ() {
               <div
                 className={`overflow-hidden transition-all duration-300 ${
                   openItems.includes(faq.id)
-                    ? "max-h-96 opacity-100"
+                    ? "max-h-96 opacity-100 "
                     : "max-h-0 opacity-0"
                 }`}
               >
@@ -222,26 +222,6 @@ export default function FAQ() {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* CTA Section */}
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-orange-500 to-orange-500 rounded-2xl p-8 sm:p-12 text-white">
-            <h3 className="font-heading text-2xl sm:text-3xl font-bold mb-4">
-              Still have questions?
-            </h3>
-            <p className="font-sans text-lg sm:text-xl mb-8 opacity-90">
-              Our team is here to help you get started with ApnaMenu
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-white text-orange-600 hover:bg-orange-50 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:-translate-y-1">
-                📞 Call Support
-              </button>
-              <button className="bg-orange-700 hover:bg-orange-800 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:-translate-y-1">
-                💬 Live Chat
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </section>

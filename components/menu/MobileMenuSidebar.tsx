@@ -10,6 +10,20 @@ interface MobileMenuSidebarProps {
   onClose: () => void
 }
 
+// Helper function to convert category to URL-safe format
+function categoryToSlug(category: string): string {
+  return category
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-')  // Replace spaces with hyphens
+    .replace(/[^\w-]+/g, '') // Remove special characters except hyphens
+}
+
+// Helper function to convert slug back to category name
+function slugToCategory(slug: string): string {
+  return slug.replace(/-/g, ' ') // Replace hyphens back to spaces
+}
+
 export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: MobileMenuSidebarProps) {
   const pathname = usePathname()
   const { categories, loading } = useMenuContext()
@@ -70,12 +84,21 @@ export default function MobileMenuSidebar({ restaurantName, isOpen, onClose }: M
           ) : (
             <div className="p-3 space-y-1">
               {allCategories.map((categoryName) => {
-                const href = `/${restaurantName}/menu/${categoryName.toLowerCase()}`
-                const isActive = pathname === href
+                // Convert category to URL-safe slug
+                const categorySlug = categoryName === 'all' ? 'all' : categoryToSlug(categoryName)
+                const href = `/${restaurantName}/menu/${categorySlug}`
                 
+                // Check if current path matches this category
+                const currentSlug = pathname.split('/').pop() || ''
+                const isActive = currentSlug === categorySlug
+                
+                // Display name (capitalize first letter of each word)
                 const displayName = categoryName === 'all' 
                   ? 'All Items' 
-                  : categoryName.charAt(0).toUpperCase() + categoryName.slice(1)
+                  : categoryName
+                      .split(' ')
+                      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                      .join(' ')
                 
                 return (
                   <Link

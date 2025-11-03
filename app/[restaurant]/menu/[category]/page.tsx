@@ -1,10 +1,9 @@
 'use client'
 import React, { useMemo } from 'react'
+import { notFound } from 'next/navigation'
 import CategorySection from '@/components/menu/CategorySection'
 import { useMenuData } from '@/hooks/useMenuData'
 import { FoodItem } from '@/types/menu'
-import { notFound } from 'next/navigation'
-
 
 interface CategoryPageProps {
   params: Promise<{ 
@@ -13,10 +12,19 @@ interface CategoryPageProps {
   }>
 }
 
+// Helper function to convert slug to category name
+function slugToCategory(slug: string): string {
+  return slug.replace(/-/g, ' ')
+}
+
 export default function CategoryPage({ params }: CategoryPageProps) {
-  const { restaurant, category } = React.use(params)
+  const { restaurant, category: categorySlug } = React.use(params)
   const { items, loading, error } = useMenuData(restaurant)
 
+  // Convert URL slug back to category name for filtering
+  const categoryName = categorySlug === 'all' ? 'all' : slugToCategory(categorySlug)
+
+  // Get unique categories from items
   const availableCategories = useMemo(() => {
     const uniqueCategories = new Set<string>()
     items.forEach(item => uniqueCategories.add(item.category.toLowerCase()))
@@ -25,26 +33,32 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
   // Check if category exists (only after data is loaded)
   React.useEffect(() => {
-    if (!loading && !error && category !== 'all') {
-      const categoryExists = availableCategories.includes(category.toLowerCase())
+    if (!loading && !error && categorySlug !== 'all') {
+      const normalizedCategory = categoryName.toLowerCase()
+      const categoryExists = availableCategories.some(
+        cat => cat.toLowerCase() === normalizedCategory
+      )
+      
       if (!categoryExists && items.length > 0) {
         notFound()
       }
     }
-  }, [loading, error, category, availableCategories, items.length])
+  }, [loading, error, categorySlug, categoryName, availableCategories, items.length])
 
   // Group items by category
   const groupedItems = useMemo(() => {
     let itemsToGroup: FoodItem[] = []
     
-    // Filter items based on selected category
-    if (category === 'all') {
+    if (categorySlug === 'all') {
       itemsToGroup = items
     } else {
-      itemsToGroup = items.filter(item => item.category.toLowerCase() === category.toLowerCase())
+      // Match by category name (case-insensitive)
+      const normalizedCategory = categoryName.toLowerCase()
+      itemsToGroup = items.filter(
+        item => item.category.toLowerCase() === normalizedCategory
+      )
     }
 
-    // Group by category
     const grouped: { [key: string]: FoodItem[] } = {}
     itemsToGroup.forEach(item => {
       const cat = item.category
@@ -55,7 +69,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     })
 
     return grouped
-  }, [items, category])
+  }, [items, categorySlug, categoryName])
 
   const totalItems = useMemo(() => 
     Object.values(groupedItems).reduce((sum, items) => sum + items.length, 0),
@@ -66,7 +80,6 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     return (
       <div className="min-h-screen bg-gray-50 px-5 py-6">
         <div className="max-w-2xl mx-auto">
-          {/* Loading Skeleton */}
           <div className="mb-6 animate-pulse">
             <div className="h-10 bg-orange-200 rounded-md w-40 mb-6"></div>
             <div className="space-y-4">
@@ -84,6 +97,10 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   }
 
   if (error) {
+    if (error.toLowerCase().includes('not found') || error.toLowerCase().includes('not exist')) {
+      notFound()
+    }
+    
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
         <div className="text-center">
@@ -95,21 +112,28 @@ export default function CategoryPage({ params }: CategoryPageProps) {
     )
   }
 
+  // Display category name (capitalize properly)
+  const displayCategoryName = categorySlug === 'all' 
+    ? 'MENU' 
+    : categoryName
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ')
+        .toUpperCase()
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-2xl mx-auto px-5 py-6">
         
-        {/* Page Title */}
         <div className="mb-6">
-          <h1 className="text-3xl font-bold  text-gray-900 mb-2">
-            MENU
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            {displayCategoryName}
           </h1>
           <p className="text-gray-600 text-sm">
             {totalItems} item{totalItems !== 1 ? 's' : ''} available
           </p>
         </div>
         
-        {/* Category Sections */}
         {Object.keys(groupedItems).length > 0 ? (
           <div>
             {Object.entries(groupedItems)
@@ -126,7 +150,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
           <div className="text-center py-16">
             <div className="text-6xl mb-4">🍽️</div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">
-              No items in {category === 'all' ? 'menu' : category}
+              No items in {displayCategoryName.toLowerCase()}
             </h3>
             <p className="text-gray-600">
               Check back later or explore other categories
