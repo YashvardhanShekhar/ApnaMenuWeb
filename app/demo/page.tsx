@@ -1,10 +1,16 @@
 "use client";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { QRCodeSVG } from "qrcode.react";
 
 export default function DemoPage() {
   const [currentStep, setCurrentStep] = useState(1);
   const [isVisible, setIsVisible] = useState(false);
+
+  // Generate demo URL dynamically
+  const demoUrl = typeof window !== 'undefined' 
+    ? `${window.location.origin}/tiwar-dhaba/menu/all`
+    : 'https://apnamenu.vercel.app/tiwar-dhaba/menu/all';
 
   useEffect(() => {
     setIsVisible(true);
@@ -22,25 +28,25 @@ export default function DemoPage() {
       <div className="relative container mx-auto px-4 py-12 sm:py-20">
         {/* Header with Animation */}
         <div
-          className={`text-center mb-12 sm:mb-16 transform transition-all duration-1000 ${
+          className={`text-center mb-8 sm:mb-8 transform transition-all duration-1000 ${
             isVisible
               ? "opacity-100 translate-y-0"
               : "opacity-0 -translate-y-10"
           }`}
         >
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6">
+          <div className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6">
             Experience <br className="sm:hidden" />
             ApnaMenu{" "}
             <span className="bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent">
               Live
             </span>
-          </h1>
-          <p className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
-            See how our digital menu system transforms the dining experience
-          </p>
+          </div>
+          <div className="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+            See how our digital menu system transforms the dining exdiverience
+          </div>
         </div>
 
-        {/* Progress Steps - FIXED */}
+        {/* Progress Steps */}
         <div
           className={`max-w-4xl mx-auto mb-12 transform transition-all duration-1000 delay-200 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
@@ -113,20 +119,17 @@ export default function DemoPage() {
 
           {/* Main Content Card */}
           <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/50 overflow-hidden">
-            <div className="p-6 sm:p-8 lg:p-12 min-h-[32rem]">
+            <div className="p-6 sm:p-8 lg:p-6 min-h-[26rem] bg-white ">
               {/* Step 1: Choose Method */}
               {currentStep === 1 && (
-                <div className=" mt-10 text-center animate-fadeIn">
-                  <div className="text-6xl sm:text-7xl mb-6 animate-bounce">
-                    📱
-                  </div>
-                  <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">
+                <div className=" text-center animate-fadeIn">
+                  <div className="text-3xl sm:text-4xl  font-bold text-gray-900 mb-2">
                     Choose Your Demo Method
-                  </h2>
-                  <p className="text-gray-600 mb-10 text-lg max-w-2xl mx-auto">
+                  </div>
+                  <div className="text-gray-600 mb-8 text-lg max-w-2xl mx-auto">
                     Experience our digital menu system the way that works best
                     for you
-                  </p>
+                  </div>
 
                   <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
                     {/* QR Code Option */}
@@ -166,7 +169,7 @@ export default function DemoPage() {
 
                     {/* Browser Option */}
                     <Link
-                      href="/demo-restaurant/menu/all"
+                      href="/tiwar-dhaba/menu/all"
                       className="group relative p-8 bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl border-2 border-blue-200 hover:border-blue-400 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl"
                     >
                       <div className="absolute inset-0 bg-gradient-to-br from-blue-400/0 to-purple-400/0 group-hover:from-blue-400/10 group-hover:to-purple-400/10 rounded-2xl transition-all"></div>
@@ -199,50 +202,33 @@ export default function DemoPage() {
                       </div>
                     </Link>
                   </div>
-
-                  {/* Quick Stats */}
-                  {/* <div className="mt-12 grid grid-cols-3 gap-4 max-w-2xl mx-auto">
-                    <div className="text-center">
-                      <div className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-1">
-                        2s
-                      </div>
-                      <div className="text-xs text-gray-600">Load Time</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-1">
-                        100%
-                      </div>
-                      <div className="text-xs text-gray-600">Mobile Ready</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-3xl font-bold bg-gradient-to-r from-orange-600 to-red-600 bg-clip-text text-transparent mb-1">
-                        0
-                      </div>
-                      <div className="text-xs text-gray-600">Apps Needed</div>
-                    </div>
-                  </div> */}
                 </div>
               )}
 
-              {/* Step 2: QR Code */}
+              {/* Step 2: QR Code - DYNAMIC GENERATION */}
               {currentStep === 2 && (
                 <div className="text-center animate-fadeIn">
-                  <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-8">
+                  <div className="text-3xl sm:text-4xl font-bold text-gray-900 mb-8">
                     Scan This QR Code
-                  </h2>
+                  </div>
 
-                  <div className="relative inline-block mb-8">
-                    <div className="absolute inset-0 bg-gradient-to-r from-orange-500 to-red-500 blur-3xl opacity-30 animate-pulse"></div>
-                    <div className="relative bg-white p-8 rounded-3xl shadow-2xl">
-                      <div className="w-64 h-64 bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl flex items-center justify-center relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-500/20 group-hover:from-orange-500/30 group-hover:to-red-500/30 transition-all"></div>
-                        <span className="relative text-white font-medium">
-                          QR Code Placeholder
-                        </span>
+                  {/* QR Code with Generated SVG */}
+                  <div className="relative inline-block mb-8 ">
+                    <div className="absolute inset-0 "></div>
+                    <div className="relative bg-orange-200 p-6 rounded-3xl shadow-2xl">
+                      <div className="w-64 h-64 bg-white rounded-2xl flex items-center justify-center p-4">
+                        {/* DYNAMICALLY GENERATED QR CODE */}
+                        <QRCodeSVG
+                          value={demoUrl}
+                          size={224}
+                          level="H"
+                          includeMargin={false}
+                        />
                       </div>
                     </div>
                   </div>
 
+                  {/* Instructions */}
                   <div className="w-full flex justify-center mb-8">
                     <div className="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-2xl p-6 border border-orange-200 shadow-md w-fit text-center">
                       <div className="flex items-center justify-center mb-4">
@@ -257,7 +243,7 @@ export default function DemoPage() {
                           <span className="flex-shrink-0 w-6 h-6 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs font-bold">
                             1
                           </span>
-                          <span>Open your phone’s camera app</span>
+                          <span>Open your phone's camera app</span>
                         </li>
 
                         <li className="flex items-start gap-3">
@@ -277,6 +263,7 @@ export default function DemoPage() {
                     </div>
                   </div>
 
+                  {/* Navigation Buttons */}
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <button
                       onClick={() => setCurrentStep(1)}
@@ -356,7 +343,7 @@ export default function DemoPage() {
                   </div>
 
                   <Link
-                    href="/demo-restaurant/menu/all"
+                    href="/tiwar-dhaba/menu/all"
                     className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white font-bold text-lg rounded-xl transition-all shadow-2xl hover:shadow-3xl transform hover:-translate-y-1"
                   >
                     <svg
