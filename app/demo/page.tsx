@@ -8,9 +8,10 @@ export default function DemoPage() {
   const [isVisible, setIsVisible] = useState(false);
 
   // Generate demo URL dynamically
-  const demoUrl = typeof window !== 'undefined' 
-    ? `${window.location.origin}/tiwar-dhaba/menu/all`
-    : 'https://apnamenu.vercel.app/tiwar-dhaba/menu/all';
+  const demoUrl =
+    typeof window !== "undefined"
+      ? `${window.location.origin}/tiwar-dhaba/menu/all`
+      : "https://apnamenu.vercel.app/tiwar-dhaba/menu/all";
 
   useEffect(() => {
     setIsVisible(true);
