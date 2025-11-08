@@ -47,7 +47,7 @@ export default function SearchModal({ isOpen, onClose, items, restaurantName }: 
     <>
       {/* Enhanced Backdrop with Heavy Blur */}
       <div 
-        className="fixed inset-0 bg-black/30 backdrop-blur z-50 animate-fadeIn"
+        className="fixed inset-0 bg-black/40 backdrop-blur z-50 animate-fadeIn"
         onClick={onClose}
       />
       
