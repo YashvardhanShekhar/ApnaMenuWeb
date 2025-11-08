@@ -1,94 +1,94 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const navItems = [
-  { href: '/', label: 'Home', scrollTo: 'hero' },
-  { href: '#about', label: 'About', scrollTo: 'about' },
-  { href: '/contact', label: 'Contact' },
-  { href: '#faq', label: 'FAQ', scrollTo: 'faq' },
-]
+  { href: "/", label: "Home", scrollTo: "hero" },
+  { href: "#about", label: "About", scrollTo: "about" },
+  { href: "/contact", label: "Contact" },
+  { href: "#faq", label: "FAQ", scrollTo: "faq" },
+];
 
 export default function Navbar() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [activeSection, setActiveSection] = useState('hero')
-  const pathname = usePathname()
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("hero");
+  const pathname = usePathname();
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   const closeMenu = () => {
-    setIsMenuOpen(false)
-  }
+    setIsMenuOpen(false);
+  };
 
   // Smooth scroll function
   const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId)
+    const element = document.getElementById(sectionId);
     if (element) {
-      const navbarHeight = 64
-      const elementPosition = element.offsetTop - navbarHeight
-      
+      const navbarHeight = 64;
+      const elementPosition = element.offsetTop - navbarHeight;
+
       window.scrollTo({
         top: elementPosition,
-        behavior: 'smooth'
-      })
+        behavior: "smooth",
+      });
     }
-    closeMenu()
-  }
+    closeMenu();
+  };
 
   // Handle navigation clicks
   const handleNavClick = (e: React.MouseEvent, item: any) => {
     if (item.scrollTo) {
-      e.preventDefault()
-      
-      if (pathname !== '/') {
-        window.location.href = `/#${item.scrollTo}`
-        return
+      e.preventDefault();
+
+      if (pathname !== "/") {
+        window.location.href = `/#${item.scrollTo}`;
+        return;
       }
-      
-      scrollToSection(item.scrollTo)
+
+      scrollToSection(item.scrollTo);
     }
-  }
+  };
 
   // Active section detection on scroll
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['hero', 'about', 'faq']
-      const navbarHeight = 64
-      
+      const sections = ["hero", "about", "faq"];
+      const navbarHeight = 64;
+
       for (let i = sections.length - 1; i >= 0; i--) {
-        const element = document.getElementById(sections[i])
+        const element = document.getElementById(sections[i]);
         if (element) {
-          const elementTop = element.offsetTop - navbarHeight - 100
+          const elementTop = element.offsetTop - navbarHeight - 100;
           if (window.scrollY >= elementTop) {
-            setActiveSection(sections[i])
-            break
+            setActiveSection(sections[i]);
+            break;
           }
         }
       }
-    }
+    };
 
-    window.addEventListener('scroll', handleScroll)
-    handleScroll()
-    
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   // Check if section is active
   const isActive = (item: any) => {
-    if (pathname !== '/') {
-      return pathname === item.href
+    if (pathname !== "/") {
+      return pathname === item.href;
     }
-    
+
     if (item.scrollTo) {
-      return activeSection === item.scrollTo
+      return activeSection === item.scrollTo;
     }
-    
-    return pathname === item.href
-  }
+
+    return pathname === item.href;
+  };
 
   return (
     <>
@@ -104,16 +104,15 @@ export default function Navbar() {
       <nav className="bg-[#e6c088] shadow-lg border-b border-border-primary sticky top-0 z-50">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-16">
-            
             {/* Brand Logo */}
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className="flex items-center space-x-2 font-bold text-xl sm:text-2xl lg:text-3xl text-[#493802] flex-shrink-0"
               onClick={(e) => {
-                closeMenu()
-                if (pathname === '/') {
-                  e.preventDefault()
-                  scrollToSection('hero')
+                closeMenu();
+                if (pathname === "/") {
+                  e.preventDefault();
+                  scrollToSection("hero");
                 }
               }}
             >
@@ -128,10 +127,10 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item)}
-                  className={`px-4 lg:px-8 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                  className={`flex items-center justify-center px-4 lg:px-8 h-12 rounded-lg text-sm font-medium transition-all duration-200 ${
                     isActive(item)
-                      ? 'text-orange-600 bg-orange-100 font-semibold'
-                      : 'text-gray-900 hover:text-orange-600 hover:bg-orange-50'
+                      ? "text-orange-600 bg-orange-100 font-semibold"
+                      : "text-gray-900 hover:text-orange-600 hover:bg-orange-50"
                   }`}
                 >
                   {item.label}
@@ -168,17 +167,17 @@ export default function Navbar() {
               >
                 <span
                   className={`block h-0.5 w-6 bg-[#493802] transition-all duration-300 ease-out ${
-                    isMenuOpen ? 'rotate-45 translate-y-1.5' : ''
+                    isMenuOpen ? "rotate-45 translate-y-1.5" : ""
                   }`}
                 />
                 <span
                   className={`block h-0.5 w-6 bg-[#493802] transition-all duration-300 ease-out my-1 ${
-                    isMenuOpen ? 'opacity-0' : ''
+                    isMenuOpen ? "opacity-0" : ""
                   }`}
                 />
                 <span
                   className={`block h-0.5 w-6 bg-[#493802] transition-all duration-300 ease-out ${
-                    isMenuOpen ? '-rotate-45 -translate-y-1.5' : ''
+                    isMenuOpen ? "-rotate-45 -translate-y-1.5" : ""
                   }`}
                 />
               </button>
@@ -188,7 +187,7 @@ export default function Navbar() {
           {/* Mobile Menu Dropdown - Higher z-index than backdrop */}
           <div
             className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out relative z-50 ${
-              isMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+              isMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
             }`}
           >
             <div className="py-4 space-y-2 bg-white rounded-b-2xl shadow-lg border-t border-orange-200">
@@ -199,8 +198,8 @@ export default function Navbar() {
                   onClick={(e) => handleNavClick(e, item)}
                   className={`block px-4 py-3 text-base font-medium rounded-lg mx-2 transition-all duration-200 ${
                     isActive(item)
-                      ? 'text-orange-600 bg-orange-100 border-l-4 border-orange-600 font-semibold'
-                      : 'text-gray-700 hover:text-orange-600 hover:bg-orange-50'
+                      ? "text-orange-600 bg-orange-100 border-l-4 border-orange-600 font-semibold"
+                      : "text-gray-700 hover:text-orange-600 hover:bg-orange-50"
                   }`}
                 >
                   {item.label}
@@ -211,5 +210,5 @@ export default function Navbar() {
         </div>
       </nav>
     </>
-  )
+  );
 }
