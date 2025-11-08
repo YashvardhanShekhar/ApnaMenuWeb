@@ -114,7 +114,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
   // Display category name (capitalize properly)
   const displayCategoryName = categorySlug === 'all' 
-    ? 'MENU' 
+    ? 'Menu' 
     : categoryName
         .split(' ')
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
@@ -123,10 +123,10 @@ export default function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="max-w-2xl mx-auto px-5 py-6">
+      <div className="max-w-2xl mx-auto px-5 py-6 ">
         
         <div className="mb-6">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
             {displayCategoryName}
           </h1>
           <p className="text-gray-600 text-sm">

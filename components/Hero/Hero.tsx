@@ -1,5 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
 
 export default function Hero() {
   const [hasAnimated, setHasAnimated] = useState(false)
@@ -114,12 +115,15 @@ export default function Hero() {
               <div className={`flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4 sm:pt-6 px-4 sm:px-0 transform transition-all duration-800 delay-600 ${
                 hasAnimated ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-5 scale-95'
               }`}>
-                <button className="w-full sm:w-auto bg-orange-800 font-modern hover:bg-orange-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl">
-                  Open Demo Menu
-                </button>
-                <button className="w-full sm:w-auto bg-transparent hover:bg-orange-600 text-orange-600 hover:text-white px-6 sm:px-8 py-3 sm:py-4 border-2 border-orange-600 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300 transform hover:-translate-y-1">
+                <Link
+  href="/tiwar-dhaba/menu/all"
+  className="w-full sm:w-auto bg-orange-800 font-modern hover:bg-orange-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300 transform hover:-translate-y-1 shadow-lg hover:shadow-xl text-center inline-block"
+>
+  Open Demo Menu
+</Link>
+                <Link href="/demo" className="w-full sm:w-auto bg-transparent hover:bg-orange-600 text-orange-600 hover:text-white px-6 sm:px-8 py-3 sm:py-4 border-2 border-orange-600 rounded-xl font-semibold text-sm sm:text-base transition-all duration-300 transform hover:-translate-y-1">
                   How It Works
-                </button>
+                </Link>
               </div>
 
               {/* Features */}
