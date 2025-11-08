@@ -122,7 +122,7 @@ export default function SearchModal({ isOpen, onClose, items, restaurantName }: 
                       </div>
                       <div className="flex-shrink-0">
                         <div className="text-lg sm:text-xl font-bold text-orange-600">
-                          ${item.price}
+                          ₹{item.price}
                         </div>
                       </div>
                     </div>
