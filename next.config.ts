@@ -1,13 +1,7 @@
-// next.config.ts
+import type { NextConfig } from "next";
 
-module.exports = {
-  async redirects() {
-    return [
-      {
-        source: "/:id/menu",
-        destination: "/:id/menu/all",
-        permanent: true, // 308
-      },
-    ];
-  },
+const nextConfig: NextConfig = {
+  /* config options here */
 };
+
+export default nextConfig;
